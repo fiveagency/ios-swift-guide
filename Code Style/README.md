@@ -20,6 +20,7 @@ We are using [Ray Wanderlich Swift Style Guide](https://github.com/raywenderlich
 * Indent using 4 spaces rather than tabs. Be sure to set this preference in Xcode and in the Project settings.
 * Long lines should be wrapped at around 120 characters.
 * Add a single newline character after class/struct name definition and before end of class body
+* Add a new line after `guard` statement
 
 **Preferred**:
 ```swift
@@ -29,6 +30,12 @@ struct Person {
     let name: String
 
 }
+
+func getStringLength(value: String?) -> Int {
+    guard let value = value else { return 0 }
+
+    return value.count
+}
 ```
 
 **Not Preferred**:
@@ -36,6 +43,11 @@ struct Person {
 struct Person {
     let id: Int
     let name: String
+}
+
+func getStringLength(value: String?) -> Int {
+    guard let value = value else { return 0 }
+    return value.count
 }
 ```
 
