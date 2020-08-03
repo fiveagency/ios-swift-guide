@@ -17,7 +17,7 @@ Each guide/folder **must** have:
 - README.md file - this is the main file which contains all of the guide details. You can find more details on how to style MD files [HERE](https://www.markdownguide.org/basic-syntax/).
 - Sample code - this is optional, but you are encouraged to add sample code, if possible.
 
-For example, let's say you want to give an example on how to use 2 libraries for dependency injection. The repository structure should look like this:
+For example, let's say you want to provide examples on how to use dependency injection with two different libraries. The repository structure should look like this:
 
     Dependency Injection
         Library 1
