@@ -9,6 +9,7 @@ This is an official code style guide for FIVE iOS Swift projects.
 * [Closure Expressions](#closure-expressions)
 * [Control Flow](#control-flow)
     * [If Else Statement](#if-else-statement)
+    * [Guard Statement](#guard-statement)
 * [Property Declaration Order](#property-declaration-order)
 
 
@@ -58,6 +59,7 @@ let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
 
 ### If Else Statement
 Braces `if` and `else` open on the same line as the statement but close on a new line. If there are multiple statements in `if` clause, braces open in new line and each condition is in new line.
+
 **Preferred**:
 ```swift
 if condition {
