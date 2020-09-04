@@ -13,6 +13,36 @@ This is an official code style guide for FIVE iOS Swift projects.
 * [Property Declaration Order](#property-declaration-order)
 
 
+## Naming
+
+Please read official Swift [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) as it is the basis for naming conventions. Some more important rules are:
+* use `camelCase` - `UpperCamelCase` for types and protocol and `lowerCamelCase` for variables, constants, function names and everything else
+* clarity is more important than brevity - you should use smallest possible number of words that **clearly** describe the type/variable/function so take your time before naming them
+* name variables, parameters, and associated types according to their roles, not type
+* name functions and methods according to their side-effects
+* choose parameter names to serve documentation
+* avoid obscure terms and abbreviations
+* take advantage of defaulted parameters and orefer to locate parameters with defaults toward the end
+* label tuple members and name closure parameters
+
+### Class prefixes
+Do not add prefix to a class. Only exception is if you are extending an existing class from an Apple library, most commonly from UIKit. Nevertheless, you should think and find a good name without using the prefix.
+
+### Type Inferred Context
+Swift compiler can conclude what is the desired (inferred) type so use that feature when assigning a value.
+**Use**:
+```swift
+let view = UIView(frame: .zero)
+view.backgroundColor = .red
+```
+
+**Avoid**:
+```swift
+let view = UIView(frame: CGRect.zero)
+view.backgroundColor = UIColor.red
+```
+
+
 ## Base rules
 We are using [Ray Wanderlich Swift Style Guide](https://github.com/raywenderlich/swift-style-guide) as a base guide. Most of the code style rules are on that page but we will list additional rules and/or exception to some of the rules.
 
