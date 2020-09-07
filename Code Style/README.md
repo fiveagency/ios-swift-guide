@@ -48,6 +48,26 @@ func imageDownlaoderDidStart() -> Bool
 ### Class prefixes
 Do not add prefix to a class. Only exception is if you are extending an existing class from an Apple library, most commonly from UIKit. Nevertheless, you should think and find a good name without using the prefix.
 
+**Use**
+```swift
+//Onboarding module
+import CoreUI
+
+...
+let button = CoreUI.RoundedButton()
+...
+```
+
+**Avoid**
+```swift
+//Onboarding module
+import CoreUI
+
+...
+let button = CoreUIRoundedButton()
+...
+```
+
 ### Type Inferred Context
 Swift compiler can conclude what is the desired (inferred) type so use that feature when assigning a value.
 
