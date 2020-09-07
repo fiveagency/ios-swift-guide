@@ -1,6 +1,6 @@
 # FIVE iOS Swift Code Style
 
-This is an official code style guide for FIVE iOS Swift projects.
+This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlich Swift Style Guide](https://github.com/raywenderlich/swift-style-guide) was used as base, additional rules were added where necessary and existing ones were modified where needed.
 
 ## Table of Contents
 - [FIVE iOS Swift Code Style](#five-ios-swift-code-style)
@@ -9,7 +9,6 @@ This is an official code style guide for FIVE iOS Swift projects.
     - [Delegates](#delegates)
     - [Class prefixes](#class-prefixes)
     - [Type Inferred Context](#type-inferred-context)
-  - [Base rules](#base-rules)
   - [Spacing](#spacing)
   - [Closure Expressions](#closure-expressions)
   - [Control Flow](#control-flow)
@@ -83,16 +82,14 @@ let view = UIView(frame: CGRect.zero)
 view.backgroundColor = UIColor.red
 ```
 
-
-## Base rules
-We are using [Ray Wanderlich Swift Style Guide](https://github.com/raywenderlich/swift-style-guide) as a base guide. Most of the code style rules are on that page but we will list additional rules and/or exception to some of the rules.
-
 ## Spacing
 * Indent using 4 spaces rather than tabs. Be sure to set this preference in Xcode and in the Project settings.
+* Empty lines should contain only a `new line` character without additional spacing.
 * Long lines should be wrapped at around 120 characters.
 * Add a single newline character after class/struct name definition and before end of class body
 * Add a new line after `guard` statement
 
+`-` represent single `space` character
 **Use**:
 ```swift
 struct Person {
@@ -107,6 +104,18 @@ func getStringLength(value: String?) -> Int {
 
     return value.count
 }
+
+func·sum(numbers:·[Int?])·{¬
+····var·sum:·Int·=·0¬
+¬
+····for·number·in·numbers·{¬
+········guard·let·number·=·number·else·{·continue·}¬
+¬
+········sum·+=·number
+····}
+¬
+····return·sum
+}
 ```
 
 **Avoid**:
@@ -119,6 +128,18 @@ struct Person {
 func getStringLength(value: String?) -> Int {
     guard let value = value else { return 0 }
     return value.count
+}
+
+func·sum(numbers:·[Int?])·{¬
+····var·sum:·Int·=·0¬
+····¬
+····for·number·in·numbers·{¬
+········guard·let·number·=·number·else·{·continue·}¬
+········¬
+········sum·+=·number
+····}
+····¬
+····return·sum
 }
 ```
 
