@@ -52,7 +52,7 @@ We are using [Ray Wanderlich Swift Style Guide](https://github.com/raywenderlich
 * Add a single newline character after class/struct name definition and before end of class body
 * Add a new line after `guard` statement
 
-**Preferred**:
+**Use**:
 ```swift
 struct Person {
 
@@ -68,7 +68,7 @@ func getStringLength(value: String?) -> Int {
 }
 ```
 
-**Not Preferred**:
+**Avoid**:
 ```swift
 struct Person {
     let id: Int
@@ -84,7 +84,7 @@ func getStringLength(value: String?) -> Int {
 ## Closure Expressions
 Chained methods using trailing closures should be clear and easy to read in context. With that in mind, each chained method should be in new line.
 
-**Preferred**:
+**Use**:
 ```swift
 let value = numbers
   .map { $0 * 2 }
@@ -92,7 +92,7 @@ let value = numbers
   .map { $0 + 10 }
 ```
 
-**Not Preferred**:
+**Avoid**:
 ```swift
 let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
 ```
@@ -102,7 +102,7 @@ let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
 ### If Else Statement
 Braces `if` and `else` open on the same line as the statement but close on a new line. If there are multiple statements in `if` clause, braces open in new line and each condition is in new line.
 
-**Preferred**:
+**Use**:
 ```swift
 if condition {
     // do something
@@ -121,7 +121,7 @@ if
 }
 ```
 
-**Not Preferred**:
+**Avoid**:
 ```swift
 if condition { 
     // do something
@@ -142,7 +142,7 @@ if condition1, condition2, condition3 {
 * If `else` body has multiple statements, the body goes in new line.
 * If `guard` statement has multiple conditions, each condition must be in new line, followed by `else` in new line and `else` body in new line.
 
-**Preferred**:
+**Use**:
 ```swift
 guard condition else { return }
 
@@ -166,7 +166,7 @@ else {
 }
 ```
 
-**Not Preferred**:
+**Avoid**:
 ```swift
 guard condition else {
     return
@@ -187,7 +187,7 @@ else { return }
 
 * If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in new line
 Braces `if` and `else` open on the same line as the statement but close on a new line. If there are multiple statements in `if` clause, braces open in new line and each condition is in new line.
-**Preferred**:
+**Use**:
 ```swift
 if condition {
     // do something
@@ -206,7 +206,7 @@ if
 }
 ```
 
-**Not Preferred**:
+**Avoid**:
 ```swift
 if condition { 
     // do something
@@ -235,7 +235,7 @@ Order of declared properties must follow these rules, ordered by priority:
 
 Static/non-static group and different visibility group must be separated by newline.
 
-**Preferred**:
+**Use**:
 ```swift
 class MyClass {
 
