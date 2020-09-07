@@ -3,14 +3,19 @@
 This is an official code style guide for FIVE iOS Swift projects.
 
 ## Table of Contents
-
-* [Base rules](#baserules)
-* [Spacing](#spacing)
-* [Closure Expressions](#closure-expressions)
-* [Control Flow](#control-flow)
-    * [If Else Statement](#if-else-statement)
-    * [Guard Statement](#guard-statement)
-* [Property Declaration Order](#property-declaration-order)
+- [FIVE iOS Swift Code Style](#five-ios-swift-code-style)
+  - [Table of Contents](#table-of-contents)
+  - [Naming](#naming)
+    - [Delegates](#delegates)
+    - [Class prefixes](#class-prefixes)
+    - [Type Inferred Context](#type-inferred-context)
+  - [Base rules](#base-rules)
+  - [Spacing](#spacing)
+  - [Closure Expressions](#closure-expressions)
+  - [Control Flow](#control-flow)
+    - [If Else Statement](#if-else-statement)
+    - [Guard Statement](#guard-statement)
+  - [Property Declaration Order](#property-declaration-order)
 
 
 ## Naming
@@ -25,11 +30,27 @@ Please read official Swift [API Design Guidelines](https://swift.org/documentati
 * take advantage of defaulted parameters and orefer to locate parameters with defaults toward the end
 * label tuple members and name closure parameters
 
+### Delegates
+The first parameter of a custom delegate method should be unnamed and contain the delegate source.
+
+**Use**:
+```swift
+func imageDownloader(_ imageDownloader: ImageDownloader, didFinishDownloading: Bool)
+func imageDownloaderDidStart(_ imageDownloader: ImageDownlaoder) -> Bool
+```
+
+**Avoid**:
+```swift
+func didFinishDownloading(imageDonwloader: ImageDownlaoder)
+func imageDownlaoderDidStart() -> Bool
+```
+
 ### Class prefixes
 Do not add prefix to a class. Only exception is if you are extending an existing class from an Apple library, most commonly from UIKit. Nevertheless, you should think and find a good name without using the prefix.
 
 ### Type Inferred Context
 Swift compiler can conclude what is the desired (inferred) type so use that feature when assigning a value.
+
 **Use**:
 ```swift
 let view = UIView(frame: .zero)
