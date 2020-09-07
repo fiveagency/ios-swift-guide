@@ -9,6 +9,7 @@ This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlic
     - [Delegates](#delegates)
     - [Class prefixes](#class-prefixes)
     - [Type Inferred Context](#type-inferred-context)
+    - [Generics](#generics)
   - [Spacing](#spacing)
   - [Closure Expressions](#closure-expressions)
   - [Control Flow](#control-flow)
@@ -80,6 +81,23 @@ view.backgroundColor = .red
 ```swift
 let view = UIView(frame: CGRect.zero)
 view.backgroundColor = UIColor.red
+```
+
+### Generics
+Generic type parameters should have a descriptive name and it should always have in upper camel case. `T`, `U`, `V` and other one-letter `generic types` can be used only when types don't have a meaning.
+
+**Use**:
+```swift
+struct Stack<Element> { ... }
+func associateBy<Key>(_ keySelector: (Element) -> Key) -> [Key: Element]
+func pow<T>(_ a: T, _ b: T)
+```
+
+**Avoid**
+```swift
+struct Stack<E> { ... }
+func associateBy<K>(_ keySelector: (Element) -> K) -> [K: Element]
+func pow<Number>(_ a: Number, _ b: Number)
 ```
 
 ## Spacing
