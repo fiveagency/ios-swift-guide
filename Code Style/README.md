@@ -31,10 +31,9 @@ Please read official Swift [API Design Guidelines](https://swift.org/documentati
 * avoid obscure terms and abbreviations
 * take advantage of defaulted parameters and prefer to locate parameters with defaults toward the end
 * label tuple members and name closure parameters
-
-```swift
-//TODO: add protocol naming here
-```
+* protocols should be suffixed with `Protocol` except:
+    * delegate protocols, they should have suffix `Delegate`
+    * protocols that describe the object, they should have suffix `able` - `Equatable`, `Codable`, `Runnable`...
 
 ### Delegates
 The first parameter of a custom delegate method should be unnamed and contain the delegate source.
