@@ -1,4 +1,4 @@
-# FIVE iOS Swift Lint Rules
+# FIVE iOS SwiftLint Rules
 
 SwiftLint is a tool to enforce Swift style and conventions.
  
@@ -9,6 +9,8 @@ Main benefits from SwiftLint are:
 * Comments on pull requests will be reduced because build checks will fail usually before anybody looks at PR.
  
 You can find more information [here](https://github.com/realm/SwiftLint).
+
+Our default implementation of the SwiftLint .yml file can be found [here](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/Swift%20Lint/.swiftlint.yml).
 
 ## Table of Contents
 
@@ -64,11 +66,10 @@ large_tuple: 4
 We are using git hook for linting projects before commit. If lint fails Git will show a message with the problem. Also, commit will not be allowed in this case.
 
 To enable pre-commit git hook in your project you have to:
-<ol>
-<li>Download this file.</li>
-<li>Move this file in .git/hooks folder of your project.</li>
-<li>If needed use chmod 777 pre-commit command</li>
-</ol>
+* Download [pre-commit](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/Swift%20Lint/pre-commit)
+ file.
+* Move this file in .git/hooks folder of your project.
+* If needed use chmod 777 pre-commit command.
 
 ## Example
 
@@ -148,7 +149,7 @@ These SwiftLint rules can be disabled because they are not following Ray Wenderl
 We defined custom rules using regex for:
 * force_try - because there are some force tries which are allowed in your project
 * force_cast - because there are some force casts which are allowed in your project
-* todo - because only todo with Jira ticket number should be allowed
+* todo - because only todo with ticket number should be allowed
 
 ```yaml
 custom_rules:
@@ -162,7 +163,7 @@ custom_rules:
       severity: error
     todo:
       name: "Todo Violation: TODOs without ticket number should be resolved."
-      regex: 'TODO:\s(?!.*(PHAI|PCAM)).*?'
+      regex: 'TODO:\s(?!.*(TICKET_PREFIX)).*?'
       severity: error
 ```
 
