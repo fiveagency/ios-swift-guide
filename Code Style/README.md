@@ -356,6 +356,10 @@ import CoreUI
 * Long lines should be wrapped at around 120 characters.
 * Add a single newline character after class/struct name definition and before the end of a class body
 * Add a new line after `guard` statement
+* Colons have no space before and have only one space after. Exceptions are:
+    * ternary operator ` ? : `
+    * empty dictionary `[:]`
+    * selectors `addTarget(_:action:)`
 
 **Use:**
 ```swift
@@ -382,6 +386,12 @@ func·sum(numbers:·[Int?])·{¬
 ····}¬
 ¬
 ····return·sum¬
+}
+
+class MyViewController: UIViewController {
+
+    let userForId: [Int: User]
+
 }
 ```
 
