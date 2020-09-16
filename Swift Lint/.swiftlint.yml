@@ -1,0 +1,13 @@
+function_parameter_count: 8
+identifier_name:
+  min_length: 2
+  max_length: 50
+line_length: 
+  warning: 120
+  ignores_comments: true
+type_name:
+  max_length: 50
+function_parameter_count:
+  warning: 9
+  error: 12
+large_tuple: 4
