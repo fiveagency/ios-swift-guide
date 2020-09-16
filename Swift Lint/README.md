@@ -146,16 +146,15 @@ These SwiftLint rules can be disabled because they are not following Ray Wenderl
 **Custom SwiftLint rules**
 
 We defined custom rules using regex for:
-* force_try - because there are some force tries which are allowed in Phoenix project
-* force_cast - because there are some force casts which are allowed in Phoenix project
+* force_try - because there are some force tries which are allowed in your project
+* force_cast - because there are some force casts which are allowed in your project
 * todo - because only todo with Jira ticket number should be allowed
 
 ```yaml
 custom_rules:
     force_try:
       name: "Force Try Violation: Force tries should be avoided."
-      regex: '\stry!\s(?!(container.(decodeWithDefault|decode|safelyDecodeArrayWithDefault|safelyDecodeOptionalArrayWithDefault|resolve)|decoder.container)).*?'
-      excluded: "Phoenix/App/CoreData"
+      regex: '\stry!\s(?!(container.(resolve))).*?'
       severity: error
     force_cast:
       name: "Force Cast Violation: Force casts should be avoided."
