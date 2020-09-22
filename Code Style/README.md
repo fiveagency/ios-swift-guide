@@ -14,6 +14,7 @@ This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlic
     * [Unused Code](#unused-code)
     * [Imports](#imports)
 * [Spacing](#spacing)
+* [Comments](#comments)
 * [Classes and structs](#classes-and-structs)
     * [Use of Self](#use-of-self)
 * [Functions](#function)
@@ -38,10 +39,11 @@ This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlic
 ## Naming
 
 Please read official Swift [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) as it is the basis for naming conventions. Some more important rules are:
-* use `camelCase` - `UpperCamelCase` for types and protocol and `lowerCamelCase` for variables, constants, function names and everything else
+* use `camelCase` - `UpperCamelCase` for types and protocols and `lowerCamelCase` for variables, constants, function names and everything else
 * clarity is more important than brevity - you should use the smallest possible number of words that **clearly** describe the type/variable/function so take your time before naming them
 * name variables, parameters, and associated types according to their roles, not type
 * name functions and methods according to their side-effects
+* beginning factory methods with `make`
 * choose parameter names to serve documentation
 * avoid obscure terms and abbreviations
 * take advantage of defaulted parameters and prefer to locate parameters with defaults toward the end
@@ -435,6 +437,13 @@ func·sum(numbers:·[Int?])·{¬
 }
 ```
 
+## Comments
+When they are needed, use comments to explain **why** a particular piece of code does something, not what it does. Comments must be kept up-to-date or deleted.
+
+Avoid block comments inline with code, as the code should be as self-documenting as possible. Exception: This does not apply to those comments used to generate documentation.
+
+Avoid the use of C-style comments (/* ... */). Prefer the use of double- or triple-slash.
+
 ## Classes and Structs
 ### Use of Self
 Since Swift doesn't require explicit `self` to access an object's properties, don't use `self` in places other than initializers and escaping closures (don't forget to weakly capture `self`).
@@ -807,7 +816,7 @@ Extend object lifetime using the `[weak self]` and `guard let self = self else {
 ```swift
 // `self` could be released between `modelHasErrors` and `someView.set`
 ...
-    .subscribe(onNext: { [unowned self] viewModel in
+    .subscribe(onNext: { [weak self] viewModel in
         let hasErrors = self?.modelHasErrors(viewModel)
         if hasErrors {
             self?.showAlert(for: viewModel)
@@ -956,6 +965,15 @@ else {
     // do something else
 }
 
+if 
+    condition1,
+    condition2,
+    condition3 {
+    // do something
+} else {
+    // do something else
+}
+
 if condition1, condition2, condition3 {
     // do something
 } else {
@@ -964,7 +982,7 @@ if condition1, condition2, condition3 {
 ```
 
 ### Guard Statement
-* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 characters, `else` body goes in a new line.
+* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 characters, depending on the lenght of the condition or the body, both condition and the `else` body go in a new line, or just tje `else` body goes in a new line.
 * If `else` body has multiple statements, the body goes in a new line.
 * If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and `else` body in a new line.
 * If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
@@ -978,6 +996,12 @@ guard condition else { return Error() }
 
 guard condition else {
     return VeryLongErrorClassNameThatWouldNotFitInSingleLine()
+}
+
+guard 
+    let variableWithVeryLongName = functionWithVeryLongName(param1: param1, param2: param2)
+else {
+    return
 }
 
 guard condition else {
