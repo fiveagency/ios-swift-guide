@@ -4,21 +4,36 @@ This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlic
 
 ## Table of Contents
 * [Naming](#naming)
-  * [Delegates](#delegates)
-  * [Class prefixes](#class-prefixes)
-  * [Type Inferred Context](#type-inferred-context)
-  * [Generics](#generics)
+    * [Delegates](#delegates)
+    * [Class prefixes](#class-prefixes)
+    * [Type Inferred Context](#type-inferred-context)
+    * [Generics](#generics)
 * [Code Organization](#code-organization)
-  * [Extensions](#extensions)
-  * [Protocol Conformance](#protocol-conformance)
-  * [Unused Code](#unused-code)
-  * [Imports](#imports)
+    * [Extensions](#extensions)
+    * [Protocol Conformance](#protocol-conformance)
+    * [Unused Code](#unused-code)
+    * [Imports](#imports)
 * [Spacing](#spacing)
+* [Classes and structs](#classes-and-structs)
+    * [Use of Self](#use-of-self)
+* [Functions](#function)
+    * [Function Declarations](#function-declarations)
+    * [Function Calls](#function-calls)
+* [Types](#types)
+    * [Optionals](#optionals)
+    * [Type inference](#type-inference)
+    * [Syntactic Sugar](#syntactic-sugar)
+* [Functions vs Methods](#functions-vs-methods)
+* [Memory Management](#memory-management)
 * [Closure Expressions](#closure-expressions)
-* [Control Flow](#control-flow)
-  * [If Else Statement](#if-else-statement)
-  * [Guard Statement](#guard-statement)
+* [Access Control](#access-control)
 * [Property Declaration Order](#property-declaration-order)
+* [Control Flow](#control-flow)
+    * [If Else Statement](#if-else-statement)
+    * [Guard Statement](#guard-statement)
+* [Semicolons](#semicolons)
+* [Parentheses](#parentheses)
+* [Multi-line String Literals](#multi-line-string-literals)
 
 ## Naming
 
@@ -32,7 +47,7 @@ Please read official Swift [API Design Guidelines](https://swift.org/documentati
 * take advantage of defaulted parameters and prefer to locate parameters with defaults toward the end
 * label tuple members and name closure parameters
 * protocols should be suffixed with `Protocol` except:
-    * delegate protocols, they should have suffix `Delegate`
+    * delegate protocols, they should have the suffix `Delegate`
     * protocols that describe the object, they should have suffix `able` - `Equatable`, `Codable`, `Runnable`...
 
 ### Delegates
@@ -351,13 +366,13 @@ import CoreUI
 ```
 
 ## Spacing
-* Indent using 4 spaces rather than tabs. Be sure to set this preference in Xcode and in the Project settings.
+* Indent using 4 spaces rather than tabs. Be sure to set this preference in Xcode and the Project settings.
 * Empty lines should contain only a `new line` character without additional spacing.
 * Long lines should be wrapped at around 120 characters.
 * Add a single newline character after class/struct name definition and before the end of a class body
 * Add a new line after `guard` statement
 * Colons have no space before and have only one space after. Exceptions are:
-    * ternary operator ` ? : `
+    * ternary operator `? :`
     * empty dictionary `[:]`
     * selectors `addTarget(_:action:)`
 
@@ -420,7 +435,196 @@ func·sum(numbers:·[Int?])·{¬
 }
 ```
 
+## Classes and Structs
+### Use of Self
+Since Swift doesn't require explicit `self` to access an object's properties, don't use `self` in places other than initializers and escaping closures (don't forget to weakly capture `self`).
+
+**Use:**
+```swift
+class MyClass {
+
+    private let id: Int
+    private let name: String
+
+    init(id: String, name: String) {
+        self.id = id
+        self.name = name
+    }
+
+    func changeName(to newName: String) {
+        name = newName
+    }
+}
+```
+
+**Avoid:**
+```swift
+class MyClass {
+
+    private let id: Int
+    private let name: String
+
+    init(objectId: String, objectName: String) {
+        id = objectId
+        name = objectName
+    }
+
+    func changeName(to newName: String) {
+        self.name = newName
+    }
+}
+```
+
+## Functions
+
+### Function Declarations
+Write function declarations that fit into 120 characters (including leading whitespace) in one line. Function declarations that are over 120 characters should be broken into multiple lines.
+Body opening brackets should be in the same line as the return type.
+
+**Use:**
+```swift
+1······················································································································|
+    func isUserLoggedIn() -> Bool {
+        ...
+    }
+
+    func someFunction(param1: SomeLongLongLongLongType1, param2: SomeLongLongLongLongType2, param3: String) -> ReturnT {
+        ...
+    }
+
+    func someFunction(
+        param1: SomeLongLongLongLongType1,
+        param2: SomeLongLongLongLongType2,
+        param3: String
+    ) -> SomeLongReturnType {
+        ...
+    }
+```
+
+**Avoid:**
+```swift
+1······················································································································|
+    func isUserLoggedIn() -> Bool 
+    {
+        ...
+    }  
+
+    func someFunction(param1: SomeLongLongLongLongType1, param2: SomeLongLongLongLongType2, param3: String) -> SomeLongReturnType {
+        ...
+    }
+
+    func someFunction(param1: SomeLongLongLongLongType1, 
+                      param2: SomeLongLongLongLongType2,
+                      param3: String) -> SomeLongReturnType {
+        ...
+    }
+```
+
+Use `()` to denote void **input** and `Void` to denote void **output** for function types, but don't use `Void` in function declaration that returns nothing. 
+
+**Use:**
+```swift
+    func myFunction() {
+        ...
+    }
+
+    let onCompleted: () -> Void
+```
+
+**Avoid:**
+```swift
+    func myFunction() -> Void {
+        ...
+    }
+
+    let onCompleted: () -> ()
+```
+
+### Function calls
+Similar to function declarations, short function calls should be in one line, and longer broken into multiple lines. The only difference is that the closing bracket for function calls doesn't go into a new line.
+
+**Use:**
+```swift
+1······················································································································|
+    let result = isUserLoggedIn()
+
+    let result2 = someFunction(
+        param1: "SomeLongLongLongLongType1",
+        param2: "SomeLongLongLongLongType2",
+        param3: "SomeLongLongLongLongType3")
+```
+
+**Avoid:**
+```swift
+1······················································································································|
+    let result1 = someFunction(param1: "SomeLongLongLongLongType1", param2: "SomeLongLongLongLongType2", param3: "SomeLongLongLongLongType3")
+
+    let result2 = someFunction(param1: "SomeLongLongLongLongType1",
+                               param2: "SomeLongLongLongLongType2",
+                               param3: "SomeLongLongLongLongType3")
+
+    let result2 = someFunction(
+        param1: "SomeLongLongLongLongType1",
+        param2: "SomeLongLongLongLongType2",
+        param3: "SomeLongLongLongLongType3"
+    )
+```
+
 ## Closure Expressions
+* Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. 
+* Give closure parameters a meaningful name
+* Use anonymous parameters when the context is clear - naming the parameter wouldn't make the code more readable.
+* Don't use `return` for one line closures.
+
+**Use:**
+```swift
+UIView.animate(withDuration: 1.0) {
+  self.myView.alpha = 0
+}
+
+UIView.animate(
+    withDuration: 1.0,
+    animations: {
+        self.myView.alpha = 0
+    },
+    completion: { finished in
+        self.myView.removeFromSuperview()
+    })
+
+let names = users
+    .map { $0.name }
+
+
+let currentYear = 2020
+let ages = users
+    .map { user in 
+        currentYear - user.dob.year
+    }
+```
+
+**Avoid:**
+```swift
+UIView.animate(withDuration: 1.0, animations: { self.myView.alpha = 0 })
+
+UIView.animate(
+    withDuration: 1.0,
+    animations: {
+        self.myView.alpha = 0
+    }) { finished in
+        self.myView.removeFromSuperview()
+    }
+
+let names = users
+    .map { user in 
+        user.name
+    }
+
+let names = users
+    .map { user in 
+        return user.name
+    }
+```
+
 Chained methods using trailing closures should be clear and easy to read in context. With that in mind, each chained method should be in a new line.
 
 **Use:**
@@ -436,132 +640,190 @@ let value = numbers
 let value = numbers.map { $0 * 2 }.filter { $0 % 3 == 0 }.index(of: 90)
 ```
 
-## Control Flow
 
-### If Else Statement
-Braces `if` and `else` open on the same line as the statement but close on a new line. If there are multiple statements in the `if` clause, braces open in a new line and each condition is in a new line.
+## Types
+### Optionals
+Use optional variables only to denote that a certain property is optional (not required in a model or a function). Try to avoid making something optional to accommodate error of any kind or give `nil` value some special meaning - `nil` means there's no value, and that's it. Naming should not indicate that the value is optional since the type already is.
+
+The fact that the address is optional has no meaning, it just won't be shown on the UI.
 
 **Use:**
 ```swift
-if condition {
-    // do something
-} else {
-    // do something else
+struct User {
+
+    let id: Int
+    let name: String
+    let address: String?
+
 }
 
-if 
-  condition1,
-  condition2,
-  condition3
-{
-    // do something
+userView.nameLabel.text = user.name
+userView.addressLabel.text = user.address
+```
+
+The fact that the address is `nil` means that the user was added after the worldwide launch and we're not storing non-US addresses.
+
+**Avoid:**
+```swift
+struct User {
+
+    let id: Int
+    let name: String
+    let optionalAddress: String?
+
+}
+
+if let address = user.optionalAddress {
+    currency = .usd
 } else {
-    // do something else
+    currency = .eur
+}
+```
+
+When accessing optional values only once, use optional chaining, but unwrap the optional if there is more than one use of the optional or you need to get the value from the optional.
+
+**Use:**
+```swift
+model?.status?.refresh()
+
+if let model = model {
+    model.status?.refresh()
+    model.name = "New name"
+    model.trySave()
+}
+```
+
+For unwrapping, use the name of the optional instead of adding something to the name like `strongSelf`, `unwrapedAddress`, `addressWithValue` etc.
+
+### Type Inference
+Avoid explicitly declaring the type if the compiler can infer the type. Exceptions can be initializing with static values, enum cases, or if we want a type other than the inferred one.
+
+**Use:**
+```swift
+let name = "MyName"
+let age = 20 // we expect this to be an Int
+let rectHeight: CGFloat = .defaultRectHeight
+let viewHeight: CGFloat = 100
+let day: DayOfWeek = .monday
+
+var names: [String] = []
+var lookup: [String: Int] = [:]
+```
+
+**Avoid:**
+```swift
+let name: String = "MyName"
+let rectHeight = CGFloat.defaultRectHeight
+let viewHeight = CGFloat(100)
+let day = DayOfWeek.monday
+
+var names = [String]()
+var lookup = [String: Int]()
+```
+
+### Syntactic Sugar
+Prefer the shortcut versions of type declarations over the full generics syntax.
+
+**Use:**
+```swift
+var names: [String]
+var employees: [Int: String]
+var numberOfOffices: Int?
+```
+
+**Avoid:**
+```swift
+var names: Array<String>
+var employees: Dictionary<Int, String>
+var numberOfOffices: Optional<Int>
+```
+
+## Functions vs Methods
+Free functions, which aren't attached to a class or type, should be used sparingly. When possible, prefer to use a method instead of a free function. This aids in readability and discoverability.
+
+Free functions are most appropriate when they aren't associated with any particular type or instance.
+
+**Use:**
+```swift
+let sorted = items.mergeSorted()  // easily discoverable
+rocket.launch()  // acts on the model
+```
+
+**Avoid:**
+```swift
+let sorted = mergeSort(items)  // hard to discover
+launch(&rocket)
+```
+
+Free Function Exceptions
+
+```swift
+let tuples = zip(a, b)  // feels natural as a free function (symmetry)
+let value = max(x, y, z)  // another free function that feels natural
+```
+
+## Memory Management
+
+The code should not create reference cycles. Analyze your object graph and prevent strong cycles with `weak` and `unowned` references. Alternatively, use value types (`struct`, `enum`) to prevent cycles altogether.
+
+### Extending object lifetime
+
+Extend object lifetime using the `[weak self]` and `guard let self = self else { return }` idiom. `[weak self]` is preferred to `[unowned self]` where it is not immediately obvious that `self` outlives the closure. Explicitly extending lifetime is preferred to optional chaining.
+
+**Use:**
+```swift
+...
+    .subscribe(onNext: { [weak self] viewModel in
+        guard let self = self else { return }
+
+        let hasErrors = self.modelHasErrors(viewModel)
+        if hasErrors {
+            self.showAlert(for: viewModel)
+        }
+
+        self.someView.set(viewModel)
+    }
+...
 }
 ```
 
 **Avoid:**
 ```swift
-if condition { 
-    // do something
-}
-else {
-    // do something else
-}
+// might crash if self is released before `onNext` is sent
+...
+    .subscribe(onNext: { [unowned self] viewModel in
+        let hasErrors = self.modelHasErrors(viewModel)
+        if hasErrors {
+            self.showAlert(for: viewModel)
+        }
 
-if condition1, condition2, condition3 {
-    // do something
-} else {
-    // do something else
-}
-```
-
-### Guard Statement
-* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 chars, `else` body goes in a new line.
-* If `else` body has multiple statements, the body goes in a new line.
-* If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and `else` body in a new line.
-
-**Use:**
-```swift
-guard condition else { return }
-
-guard condition else { return Error() }
-
-guard condition else {
-    return VeryLongErrorClassNameThatWouldNotFitInSingleLine()
-}
-
-guard condition else {
-    processFirstThing()
-    processThatOtherThing()
-    return
-}
-
-guard
-    condition1,
-    condition2
-else {
-    return
+        self.someView.set(viewModel)
+    }
+...
 }
 ```
 
 **Avoid:**
 ```swift
-guard condition else {
-    return
-}
+// `self` could be released between `modelHasErrors` and `someView.set`
+...
+    .subscribe(onNext: { [unowned self] viewModel in
+        let hasErrors = self?.modelHasErrors(viewModel)
+        if hasErrors {
+            self?.showAlert(for: viewModel)
+        }
 
-guard condition
-else { return }
-
-guard condition else {
-    return Error()
-}
-
-guard condition else { return VeryLongErrorClassNameThatWouldNotFitInSingleLine() }
-
-guard condition1, condition2
-else { return }
-```
-
-* If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
-Braces `if` and `else` open on the same line as the statement but close on a new line. If there are multiple statements in the `if` clause, braces open in a new line and each condition is in a new line.
-**Use:**
-```swift
-if condition {
-    // do something
-} else {
-    // do something else
-}
-
-if 
-  condition1,
-  condition2,
-  condition3
-{
-    // do something
-} else {
-    // do something else
-}
-```
-
-**Avoid:**
-```swift
-if condition { 
-    // do something
-}
-else {
-    // do something else
-}
-
-if condition1, condition2, condition3 {
-    // do something
-} else {
-    // do something else
-}
+        self?.someView.set(viewModel)
+    }
+...
 ```
 
 
+## Access Control
+
+In most cases, the only modifier you'll need to use is `private`, which is preferred over `fileprivate`.
+Write other modifiers if the code organization requires it explicitly. E.g. using `public` when you want something to be visible outside that module in workspaces with multiple modules (projects).
+Try to make private everything that does not need to be exposed unless using extensions. In those cases do your best to make that property immutable to the outside.
 
 ## Property Declaration Order
 Order of declared properties must follow these rules, ordered by priority:
@@ -622,3 +884,199 @@ class MyClass {
 
 }
 ```
+
+## Control Flow
+
+Prefer `guard` over `if` when the condition blocks execution of the rest of the function and to avoid the pyramid of doom.
+
+**Use:**
+```swift
+func parse(from json: [String: Any]?) -> MyType{
+    guard let json = json else { return nil }
+    
+    guard
+        let id = json[idKey],
+        let name = json[nameKey]
+    else {
+        log("missing required values")
+        return nil
+    }
+
+    ...
+    return myTypeObject
+}
+``` 
+
+**Avoid:**
+```swift
+func parse(from json: [String: Any]?) -> MyType{
+    if let json = json {
+        if
+            let id = json[idKey],
+            let name = json[nameKey]
+        {
+            ...
+            return myTypeObject
+        } else {
+            log("missing required values")
+            return nil
+        }
+    }
+}
+``` 
+
+### If Else Statement
+Braces `if` and `else` open on the same line as the statement but close on a new line. If there are multiple statements in the `if` clause, braces open in a new line and each condition is in a new line.
+
+**Use:**
+```swift
+if condition {
+    // do something
+} else {
+    // do something else
+}
+
+if 
+  condition1,
+  condition2,
+  condition3
+{
+    // do something
+} else {
+    // do something else
+}
+```
+
+**Avoid:**
+```swift
+if condition { 
+    // do something
+}
+else {
+    // do something else
+}
+
+if condition1, condition2, condition3 {
+    // do something
+} else {
+    // do something else
+}
+```
+
+### Guard Statement
+* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 characters, `else` body goes in a new line.
+* If `else` body has multiple statements, the body goes in a new line.
+* If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and `else` body in a new line.
+* If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
+* Leave an empty line after the `guard` statement.
+
+**Use:**
+```swift
+guard condition else { return }
+
+guard condition else { return Error() }
+
+guard condition else {
+    return VeryLongErrorClassNameThatWouldNotFitInSingleLine()
+}
+
+guard condition else {
+    processFirstThing()
+    processThatOtherThing()
+    return
+}
+
+guard
+    condition1,
+    condition2
+else {
+    return
+}
+```
+
+**Avoid:**
+```swift
+guard condition else {
+    return
+}
+
+guard condition
+else { return }
+
+guard condition else {
+    return Error()
+}
+
+guard condition else { return VeryLongErrorClassNameThatWouldNotFitInSingleLine() }
+
+guard condition1, condition2
+else { return }
+```
+
+
+## Semicolons
+
+Swift requires semicolons only if writing multiple statements in the same line - which you should never do, so semicolons should be avoided.
+
+## Parentheses
+
+Parentheses for conditions should be avoided unless there are multiple conditions. But try to create a variable from each condition and evaluate those variables rather than the conditions themselves. 
+
+**Use:**
+```swift
+if name == "Name" {
+
+}
+
+if (a > b && a > c) && (d < a) {
+
+}
+
+let isDeveloper = role == .developer
+let isStudent = status == .student
+if name == "Name" && isDeveloper && isStudent {
+
+} 
+```
+
+**Avoid:**
+```swift
+if (name == "Name") {
+
+}
+
+if a > b && a > c && d < a {
+
+}
+
+if (name == "Name") && (role == .developer) && (status == .student) {
+
+} 
+```
+
+## Multi-line String Literals
+
+When creating a long string literal, you should use the multi-line string literal syntax. Open the literal on the same line as the assignment but do not include text on that line. Indent the text block one additional level.
+
+**Use:**
+```swift
+let message = """
+    First line of text \
+    Second line \
+    Third line.
+  """
+```
+
+**Avoid:**
+```swift
+let message = """First line of text \
+    Second line \
+    Third line.
+  """
+
+let message = "First line of text " +
+  "Second line " +
+  "Third line.."
+```
+
+
