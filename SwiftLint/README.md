@@ -19,7 +19,7 @@ Main benefits from SwiftLint are:
  
 You can find more information [here](https://github.com/realm/SwiftLint).
 
-Our default implementation of the SwiftLint .yml file can be found [here](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/SwiftLint/.swiftlint.yml).
+Our default implementation of the SwiftLint .yml file can be found [here](.swiftlint.yml).
 
 ## Code Style
 
@@ -32,7 +32,7 @@ SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.
 To enable SwiftLint in your project you have to:
 
 1. Install the [latest SwiftLint pod](https://github.com/realm/SwiftLint/tags).
-1. Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can use our [default SwiftLint implementation](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/SwiftLint/.swiftlint.yml) and just copy it. Make sure to stage it for commit if you have a source control system.
+1. Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can use our [default SwiftLint implementation](.swiftlint.yml) and just copy it. Make sure to stage it for commit if you have a source control system.
 1. You need to add a SwiftLint run phase:
     1. In XCode, click on project
     1. Select desired target
@@ -40,6 +40,8 @@ To enable SwiftLint in your project you have to:
     1. Click on Add button and select New Run Script Phase
     1. In definition, add this: ${PODS_ROOT}/SwiftLint/swiftlint
     1. Run pod install and rebuild the project
+    
+![Example](Images/Image_1.png)
 
 **Update SwiftLint to  Ray Wenderlich style guide**
 
@@ -66,7 +68,7 @@ large_tuple: 4
 We are using git hook for linting projects before commit. If lint fails Git will show a message with the problem. Also, commit will not be allowed in this case.
 
 To enable pre-commit git hook in your project you have to:
-* Download [pre-commit](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/SwiftLint/pre-commit)
+* Download [pre-commit](pre-commit)
  file.
 * Move this file in .git/hooks folder of your project.
 * If needed use chmod 777 pre-commit command.
