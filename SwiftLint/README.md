@@ -25,21 +25,16 @@ SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.
 **Basic setup**
 
 To enable SwiftLint in your project you have to:
-<ol>
-<li>Add the following line to your Podfile: pod 'SwiftLint', '0.39.2'. Check the latest release tag here: https://github.com/realm/SwiftLint/tags.</li>
-<li>Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can find an example here https://github.com/raywenderlich/swift-algorithm-club/blob/master/.swiftlint.yml and just copy it. Make sure to stage it for commit if you have a source control system.</li>
-<li>You need to add a SwiftLint run phase:</li>
-  
-<ol>
-<li>In XCode, click on project</li>
-<li>Select desired target</li>
-<li>Select Build phases</li>
-<li>Click on Add button and select New Run Script Phase</li>
-<li>In definition, add this: ${PODS_ROOT}/SwiftLint/swiftlint</li>
-<li>Run pod install and rebuild the project</li>
-</ol>
-  
-</ol>
+
+1. Add the following line to your Podfile: pod 'SwiftLint', '0.39.2'. Check the latest release tag [here](https://github.com/realm/SwiftLint/tags).
+1. Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can find an example [here](https://github.com/raywenderlich/)swift-algorithm-club/blob/master/.swiftlint.yml and just copy it. Make sure to stage it for commit if you have a source control system.
+1. You need to add a SwiftLint run phase:
+    1. In XCode, click on project
+    1. Select desired target
+    1. Select Build phases
+    1. Click on Add button and select New Run Script Phase
+    1. In definition, add this: ${PODS_ROOT}/SwiftLint/swiftlint
+    1. Run pod install and rebuild the project
 
 **Update SwiftLint to  Ray Wenderlich style guide**
 
@@ -166,4 +161,3 @@ custom_rules:
       regex: 'TODO:\s(?!.*(TICKET_PREFIX)).*?'
       severity: error
 ```
-
