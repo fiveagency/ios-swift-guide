@@ -10,12 +10,12 @@
 ## Overview
 
 SwiftLint is a tool to enforce Swift style and conventions.
- 
-Main benefits from SwiftLint are:
-* It helps new developers to follow our code style guide.
-* SwiftLint will show warnings if the code style guide is not followed.
-* It will help us to not make the same mistake every time.
-* Comments on pull requests will be reduced because build checks will fail usually before anybody looks at PR.
+
+Main benefits of linting a Swift code:
+* It helps onboarding a new developer and follow FIVE iOS code style guide.
+* SwiftLint will warn a developer if the code style guide is not followed, and improve code consistency across FIVE iOS codebases.
+* Can help reduce the number of common mistakes, e.g. strong `self` in closures 💪
+* Reduce number of stylistic comments on pull requests, as build checks will surface such mistakes even before anybody looks at a pull request. 
  
 You can find more information [here](https://github.com/realm/SwiftLint).
 
@@ -24,6 +24,13 @@ Our default implementation of the SwiftLint .yml file can be found [here](.swift
 ## Code Style
 
 SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.com/github/swift-style-guide). However, because this style guide is not active anymore we are following a Swift style guide from Ray Wenderlich. This style guide can be found [here](https://github.com/raywenderlich/swift-style-guide) and it is regularly maintained.
+
+SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.com/github/swift-style-guide). However, because Github style guide was not maintained we chose to follow a different one as our baseline standard - [Ray Wenderlich Style Guide](https://github.com/raywenderlich/swift-style-guide). Choosing a different style guide is supported. 
+SwiftLint is highly configurable and extensible linter with:
+* 75 out-of-the-box [rules](https://realm.github.io/SwiftLint/rule-directory.html)
+* YAML config file for [selecting rules](https://github.com/realm/SwiftLint#configuration)
+* Custom [regex-based rules](https://github.com/realm/SwiftLint#defining-custom-rules)
+
 
 ## Integration into project
 
@@ -168,3 +175,17 @@ custom_rules:
       regex: 'TODO:\s(?!.*(TICKET_PREFIX)).*?'
       severity: error
 ```
+
+
+**SwiftLint warnings**
+
+Below are examples of SwiftLint warnings when we broke some rules.
+
+Build will fail with SwiftLint message if we set severity as error :
+
+![Example](Images/Image_2.png)
+
+Build will succeed with SwiftLint message if we set severity as a warning:
+
+![Example](Images/Image_3.png)
+
