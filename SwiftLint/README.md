@@ -1,5 +1,14 @@
 # FIVE iOS SwiftLint Rules
 
+## Table of Contents
+
+* [Overview](#overview)
+* [Code Style](#code-style)
+* [Integration into project](#integration-into-project)
+* [Example](#example)
+
+## Overview
+
 SwiftLint is a tool to enforce Swift style and conventions.
  
 Main benefits from SwiftLint are:
@@ -12,22 +21,18 @@ You can find more information [here](https://github.com/realm/SwiftLint).
 
 Our default implementation of the SwiftLint .yml file can be found [here](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/SwiftLint/.swiftlint.yml).
 
-## Table of Contents
-
-* [Code Style](#code-style)
-* [Integration into project](#integration-into-project)
-* [Example](#example)
-
 ## Code Style
+
 SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.com/github/swift-style-guide). However, because this style guide is not active anymore we are following a Swift style guide from Ray Wenderlich. This style guide can be found [here](https://github.com/raywenderlich/swift-style-guide) and it is regularly maintained.
 
 ## Integration into project
+
 **Basic setup**
 
 To enable SwiftLint in your project you have to:
 
-1. Add the following line to your Podfile: pod 'SwiftLint', '0.39.2'. Check the latest release tag [here](https://github.com/realm/SwiftLint/tags).
-1. Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can find an example [here](https://github.com/raywenderlich/)swift-algorithm-club/blob/master/.swiftlint.yml and just copy it. Make sure to stage it for commit if you have a source control system.
+1. Install the [latest SwiftLint pod](https://github.com/realm/SwiftLint/tags).
+1. Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can use our [default SwiftLint implementation](https://github.com/fiveagency/ios-swift-guide/tree/proposal/swift-lint/SwiftLint/.swiftlint.yml) and just copy it. Make sure to stage it for commit if you have a source control system.
 1. You need to add a SwiftLint run phase:
     1. In XCode, click on project
     1. Select desired target
