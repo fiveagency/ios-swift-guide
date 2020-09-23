@@ -172,7 +172,7 @@ custom_rules:
       severity: error
     todo:
       name: "Todo Violation: TODOs without ticket number should be resolved."
-      regex: 'TODO:\s(?!.*(TICKET_PREFIX)).*?'
+      regex: 'TODO:\s(?!.*(TICKET_PREFIX-\d)).*?'
       severity: error
 ```
 
