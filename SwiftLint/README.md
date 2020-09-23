@@ -88,7 +88,7 @@ An example of .swiftlint.yml file has the following structure:
 * Disabled default SwiftLint rules
 * Custom SwiftLint rules
 
-**Files included for swiftlint rules**
+**Files included for SwiftLint rules**
 
 ```yaml
 included: 
