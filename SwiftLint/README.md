@@ -12,7 +12,7 @@
 SwiftLint is a tool to enforce Swift style and conventions.
 
 Main benefits of linting a Swift code:
-* It helps onboarding a new developer and follow FIVE iOS code style guide.
+* It helps to onboard a new developer and follow FIVE iOS code style guide.
 * SwiftLint will warn a developer if the code style guide is not followed, and improve code consistency across FIVE iOS codebases.
 * Can help reduce the number of common mistakes, e.g. strong `self` in closures 💪
 * Reduce number of stylistic comments on pull requests, as build checks will surface such mistakes even before anybody looks at a pull request. 
@@ -188,4 +188,3 @@ Build will fail with SwiftLint message if we set severity as error :
 Build will succeed with SwiftLint message if we set severity as a warning:
 
 ![Example](Images/Image_3.png)
-
