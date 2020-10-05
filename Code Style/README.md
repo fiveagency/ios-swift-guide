@@ -17,7 +17,7 @@ This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlic
 * [Comments](#comments)
 * [Classes and structs](#classes-and-structs)
     * [Use of Self](#use-of-self)
-* [Functions](#function)
+* [Functions](#functions)
     * [Function Declarations](#function-declarations)
     * [Function Calls](#function-calls)
 * [Types](#types)
@@ -63,8 +63,8 @@ func imageDownloaderDidStart(_ imageDownloader: ImageDownloader) -> Bool
 
 **Avoid:**
 ```swift
-func didFinishDownloading(imageDonwloader: ImageDownlaoder)
-func imageDownlaoderDidStart() -> Bool
+func didFinishDownloading(imageDownloader: ImageDownloader)
+func imageDownloaderDidStart() -> Bool
 ```
 
 ### Class prefixes
@@ -282,7 +282,7 @@ extension ContentViewController: UIScrollViewDelegate {
 }
 
 // OR
-class ContentViewController: UIViewControlle, UIScrollViewDelegate {
+class ContentViewController: UIViewController, UIScrollViewDelegate {
 
     private let presenter: ContentPresenter
     ...
@@ -463,6 +463,7 @@ class MyClass {
     func changeName(to newName: String) {
         name = newName
     }
+
 }
 ```
 
@@ -481,6 +482,7 @@ class MyClass {
     func changeName(to newName: String) {
         self.name = newName
     }
+
 }
 ```
 
@@ -982,9 +984,9 @@ if condition1, condition2, condition3 {
 ```
 
 ### Guard Statement
-* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 characters, depending on the lenght of the condition or the body, both condition and the `else` body go in a new line, or just tje `else` body goes in a new line.
+* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 characters, depending on the lenght of the condition or the body, both condition and the `else` body go in a new line, or just the `else` body goes in a new line.
 * If `else` body has multiple statements, the body goes in a new line.
-* If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and `else` body in a new line.
+* If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and finally `else` body beginning in a new line.
 * If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
 * Leave an empty line after the `guard` statement.
 
@@ -1102,4 +1104,3 @@ let message = "First line of text " +
   "Second line " +
   "Third line.."
 ```
-
