@@ -58,7 +58,7 @@ The first parameter of a custom delegate method should be unnamed and contain th
 **Use:**
 ```swift
 func imageDownloader(_ imageDownloader: ImageDownloader, didFinishDownloading: Bool)
-func imageDownloaderDidStart(_ imageDownloader: ImageDownlaoder) -> Bool
+func imageDownloaderDidStart(_ imageDownloader: ImageDownloader) -> Bool
 ```
 
 **Avoid:**
@@ -1102,5 +1102,4 @@ let message = "First line of text " +
   "Second line " +
   "Third line.."
 ```
-
 
