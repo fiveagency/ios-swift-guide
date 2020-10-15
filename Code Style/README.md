@@ -583,9 +583,9 @@ Similar to function declarations, short function calls should be in one line, an
 
 ## Closure Expressions
 * Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. 
-* Give closure parameters a meaningful name
+* Give closure parameters a meaningful name.
 * Use anonymous parameters when the context is clear - naming the parameter wouldn't make the code more readable.
-* Don't use `return` for one line closures.
+* Don't use `return` for one line closures if using Swift API 5.1+.
 
 **Use:**
 ```swift
@@ -608,8 +608,9 @@ let names = users
 
 let currentYear = 2020
 let ages = users
-    .map { user in 
-        currentYear - user.dob.year
+    .map { user in
+        self.checkSomething(user)
+        return currentYear - user.dob.year
     }
 ```
 
@@ -779,7 +780,7 @@ The code should not create reference cycles. Analyze your object graph and preve
 
 ### Extending object lifetime
 
-Extend object lifetime using the `[weak self]` and `guard let self = self else { return }` idiom. `[weak self]` is preferred to `[unowned self]` where it is not immediately obvious that `self` outlives the closure. Explicitly extending lifetime is preferred to optional chaining.
+Extend object lifetime using the `[weak self]` and `guard let self = self else { return }` idiom. `[weak self]` is preferred to `[unowned self]` where it is not immediately obvious that `self` outlives the closure. Explicitly extending lifetime is preferred to optional chaining. Capturing `weak self` is **mandatory** when you want to use `self` in `@escaping` closures.
 
 **Use:**
 ```swift
@@ -839,7 +840,7 @@ Try to make private everything that does not need to be exposed unless using ext
 ## Property Declaration Order
 Order of declared properties must follow these rules, ordered by priority:
 1. `static` before `non-static`
-2. `private` before `internal` and `internal` before `public`
+2. `public` before `internal` and `internal` before `private`
 3. `constants` before `variables` (`let` before `var`)
 4. properties initialized in the same line as declared before those initialized at some other time
 5. `computed properties` after other properties
@@ -851,37 +852,37 @@ The static/non-static group and different visibility groups must be separated by
 ```swift
 class MyClass {
 
-    private static let var1 = "Var1"
-    private static var var2 = "Var2"
+    static let var1 = "Var1"
+    static var var2 = "Var2"
 
-    static let var3 = "Var3"
-    static var var4 = "Var4"
+    private static let var3 = "Var3"
+    private static var var4 = "Var4"
 
-    private let var5 = "Var5"
-    private let var6: String
-    private var var7 = "Var7"
-    private var var8: String
+    public let var5 = "Var5"
+    public let var6: String
+    public var var7 = "Var7"
+    public var var8: String
 
     let var9 = "Var9"
     let var10: String
     var var11 = "Var11"
     var var12: String
 
-    public let var13 = "Var13"
-    public let var14: String
-    public var var15 = "Var15"
-    public var var16: String
+    private let var13 = "Var13"
+    private let var14: String
+    private var var15 = "Var15"
+    private var var16: String
 
-    private var var17: String {
-        var5 + var7
+    public var var17: String {
+        var5 + "x"
     }
 
     var var18: String {
         var9 + "10"
     }
 
-    public var var19: String {
-        var5 + "x"
+    private var var19: String {
+        var5 + var7
     }
 
     init(var6: String, var8: String) {
@@ -988,7 +989,7 @@ if condition1, condition2, condition3 {
 * If `else` body has multiple statements, the body goes in a new line.
 * If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and finally `else` body beginning in a new line.
 * If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
-* Leave an empty line after the `guard` statement.
+* Leave an empty line after the `guard` statement(s) block.
 
 **Use:**
 ```swift
