@@ -370,6 +370,8 @@ import CoreUI
 ## Spacing
 * Indent using 4 spaces rather than tabs. Be sure to set this preference in Xcode and the Project settings.
 * Empty lines should contain only a `new line` character without additional spacing.
+    * Use XCode Editor settings to enforce this rule (XCode Menu -> Preferences -> Text Editing -> Editing)
+    ![Spacing](spacing.jpg)
 * Long lines should be wrapped at around 120 characters.
 * Add a single newline character after class/struct name definition and before the end of a class body
 * Add a new line after `guard` statement
