@@ -1,6 +1,6 @@
 # FIVE iOS Swift Code Style
 
-This is an official code style guide for FIVE iOS Swift projects. [Ray Wanderlich Swift Style Guide](https://github.com/raywenderlich/swift-style-guide) was used as the base, additional rules were added where necessary and existing ones were modified where needed.
+This is an official code style guide for FIVE iOS Swift projects. [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) was used as the base, additional rules were added where necessary and existing ones were modified where needed.
 
 ## Table of Contents
 * [Naming](#naming)
@@ -584,7 +584,8 @@ Similar to function declarations, short function calls should be in one line, an
 ```
 
 ## Closure Expressions
-* Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. 
+* Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. (Swift API <5.3)
+* Using multiple trailing closure syntax (Swift API 5.3+) is optional. 
 * Give closure parameters a meaningful name.
 * Use anonymous parameters when the context is clear - naming the parameter wouldn't make the code more readable.
 * Don't use `return` for one line closures if using Swift API 5.1+.
