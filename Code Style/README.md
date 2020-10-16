@@ -16,17 +16,18 @@ This is an official code style guide for FIVE iOS Swift projects. [API Design Gu
 * [Spacing](#spacing)
 * [Comments](#comments)
 * [Classes and structs](#classes-and-structs)
-    * [Use of Self](#use-of-self)
+    * [Use of self](#use-of-self)
 * [Functions](#functions)
     * [Function Declarations](#function-declarations)
     * [Function Calls](#function-calls)
+* [Closure Expressions](#closure-expressions)
 * [Types](#types)
     * [Optionals](#optionals)
     * [Type inference](#type-inference)
     * [Syntactic Sugar](#syntactic-sugar)
 * [Functions vs Methods](#functions-vs-methods)
 * [Memory Management](#memory-management)
-* [Closure Expressions](#closure-expressions)
+    * [Extending object lifetime](#extending-object-lifetime)
 * [Access Control](#access-control)
 * [Property Declaration Order](#property-declaration-order)
 * [Control Flow](#control-flow)
@@ -124,78 +125,144 @@ func pow<Number>(_ a: Number, _ b: Number)
 
 ## Code Organization
 ### Extensions
-Extensions should be written in separate files and they should be named based on the protocol they're implementing or a logical unit that was extracted from the original file.
+You should write a separate extension for each protocol you are conforming to. Extension should be:
+* In a new file if that allows you not to modify class property visibility (this does not apply to properties that are extension of `UIView`)
+* Otherwise, in the same file as class declaration. In that case, each extension **must** have a `// MARK:` comment with name for easy navigation
+
+It is a good practice to write code for building the view in a separate extension in a new file because building the UI should be separated from the class functionality.
+You use the `ConstructViewsProtocol` protocol or you can define your own. The point is that the UI building process in code should be formalized.
+
+```swift
+/**
+  Formalizes view construction into separate lifecycle steps:
+  - creating views - creates and initializes all child views
+  - styling views - sets style properties for each child view
+  - define layout for views - sets layout constraints for each view
+*/
+protocol ConstructViewsProtocol {
+
+    func createViews()
+
+    func styleViews()
+
+    func defineLayoutForViews()
+
+}
+```
 
 **Use:**
 ```swift
-// MediaDetailsViewController.swift
-class MediaDetailsViewController {
-    // init and lifecycle
+// ContentViewController.swift
+class ContentViewController: UIViewController {
+
+    var someView: UIView!
+
+    private let presenter: ContentPresenter
+    ...
+
 }
 
-// MediaDetailsViewController+Design.swift
-extension MediaDetailsViewController: ConstructViewsProtocol {
-    // build views
+extension ContentViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        ...
+        presenter.doSomething()
+        ...
+    }
+
 }
 
-// MediaDetailsViewController+Audio.swift
-extension MediaDetailsViewController {
-    // implementation of audio-only functions
+// ContentViewController+Design.swift
+extension ContentViewController: ConstructViewsProtocol {
+
+    func createViews() {
+        someView = UIView()
+        view.addSubview(someView)
+    }
+
+    func styleViews() {
+        ...
+    }
+
+    func defineLayoutForViews() {
+        ...
+    }
+
 }
 ```
 
 **Avoid:**
 ```swift
-// MediaDetailsViewController.swift
-class MediaDetailsViewController {
-    // init and lifecycle
+// ContentViewController.swift
+class ContentViewController: UIViewController {
+
+    
+    let presenter: ContentPresenter // replaced `private` with `internal`
+
+    private var someView: UIView! // replaced `internal` with `private`
+    ...
+
 }
 
-extension MediaDetailsViewController: ConstructViewsProtocol {
-    // build views
+extension ContentViewController: ConstructViewsProtocol {
+
+    func createViews() {
+        someView = UIView()
+        view.addSubview(someView)
+    }
+
+    func styleViews() {
+        ...
+    }
+
+    func defineLayoutForViews() {
+        ...
+    }
+
 }
 
-extension MediaDetailsViewController {
-    // implementation of audio-only functions
+// ContentViewController+Scroll.swift
+extension ContentViewController: UIScrollViewDelegate {
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        ...
+        presenter.doSomething()
+        ...
+    }
+   
+}
+
+// OR
+class ContentViewController: UIViewController, ConstructViewsProtocol, UIScrollViewDelegate {
+
+    private let presenter: ContentPresenter
+    private var someView: UIView!
+    ...
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        ...
+        presenter.doSomething()
+        ...
+    }
+
+    func createViews() {
+        someView = UIView()
+        view.addSubview(someView)
+    }
+
+    func styleViews() {
+        ...
+    }
+
+    func defineLayoutForViews() {
+        ...
+    }
+
 }
 ```
 
 ### Protocol Conformance
-As mentioned in [Extensions](#extensions), when conforming to a protocol, methods should be implemented in an extension and placed in another file.
-
-**Use:**
-```swift
-// MediaDetailsViewController.swift
-class MediaDetailsViewController: UIViewController {
-    // ViewController lifecycle
-}
-
-// MediaDetailsViewController+FlowLayout.swift
-extension MediaDetailsViewController: UICollectionViewDelegateFlowLayout {
-    // FlowLayout delegate functions
-}
-
-// MediaDetailsViewController+ScrollView.swift
-extension MediaDetailsViewController: UIScrollViewDelegate {
-    // ScrollView delegate functions
-}
-```
-
-**Avoid:**
-```swift
-// MediaDetailsViewController.swift
-class MediaDetailsViewController: UIViewController, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
-
-    // ViewController lifecycle
-
-    // FlowLayout delegate functions
-
-    // ScrollView delegate functions
-
-}
-```
-
-Exceptions are protocols that provide default implementation or protocols without which the object makes no sense. 
+As mentioned in [Extensions](#extensions), when conforming to a protocol, methods should be implemented in an extension. Exceptions are protocols that provide default implementation or protocols without which the object makes no sense. 
 In those cases, multiple protocols can be listed after the object name.
 
 **Use:**:
@@ -235,66 +302,6 @@ extension Car: Codable {
     }
 
 }
-```
-
-One thing to consider is keeping an extension in the same file as the class/struct itself if the protocol function needs access to private attributes.
-
-**Use:**
-```swift
-// ContentViewController.swift
-class ContentViewController: UIViewController {
-
-    private let presenter: ContentPresenter
-    ...
-
-}
-
-extension ContentViewController: UIScrollViewDelegate {
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        ...
-        presenter.doSomething()
-        ...
-    }
-
-}
-```
-
-**Avoid:**
-```swift
-// ContentViewController.swift
-class ContentViewController: UIViewController {
-
-    let presenter: ContentPresenter // replaced `private` with `internal`
-    ...
-
-}
-
-// ContentViewController+Scroll.swift
-extension ContentViewController: UIScrollViewDelegate {
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        ...
-        presenter.doSomething()
-        ...
-    }
-
-}
-
-// OR
-class ContentViewController: UIViewController, UIScrollViewDelegate {
-
-    private let presenter: ContentPresenter
-    ...
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        ...
-        presenter.doSomething()
-        ...
-    }
-
-}
-
 ```
 
 ### Unused Code
@@ -447,7 +454,7 @@ Avoid block comments inline with code, as the code should be as self-documenting
 Avoid the use of C-style comments (/* ... */). Prefer the use of double- or triple-slash.
 
 ## Classes and Structs
-### Use of Self
+### Use of self
 Since Swift doesn't require explicit `self` to access an object's properties, don't use `self` in places other than initializers and escaping closures (don't forget to weakly capture `self`).
 
 **Use:**
@@ -555,6 +562,7 @@ Use `()` to denote void **input** and `Void` to denote void **output** for funct
 
 ### Function calls
 Similar to function declarations, short function calls should be in one line, and longer broken into multiple lines. The only difference is that the closing bracket for function calls doesn't go into a new line.
+Exception are multiple trailing closures which are described in [Closure Expressions](#closure-expressions).
 
 **Use:**
 ```swift
@@ -585,7 +593,7 @@ Similar to function declarations, short function calls should be in one line, an
 
 ## Closure Expressions
 * Use trailing closure syntax only if there's a single closure expression parameter at the end of the argument list. (Swift API <5.3)
-* Using multiple trailing closure syntax (Swift API 5.3+) is optional. 
+* Using multiple trailing closure syntax (Swift API 5.3+) is optional.
 * Give closure parameters a meaningful name.
 * Use anonymous parameters when the context is clear - naming the parameter wouldn't make the code more readable.
 * Don't use `return` for one line closures if using Swift API 5.1+.
@@ -615,6 +623,19 @@ let ages = users
         self.checkSomething(user)
         return currentYear - user.dob.year
     }
+
+// Multiple trailing closures
+UIView.animate(
+    withDuration: 1.0,
+    delay: 0.0,
+    options: .curveEaseIn
+) {
+    // animate something
+} completion: { success in
+    if success {
+        // do something
+    }
+}
 ```
 
 **Avoid:**
@@ -638,6 +659,19 @@ let names = users
     .map { user in 
         return user.name
     }
+
+// Multiple trailing closures
+UIView.animate(
+    withDuration: 1.0,
+    delay: 0.0,
+    options: .curveEaseIn) {
+    // animate something
+} 
+completion: { success in
+    if success {
+        // do something
+    }
+}
 ```
 
 Chained methods using trailing closures should be clear and easy to read in context. With that in mind, each chained method should be in a new line.
@@ -850,6 +884,7 @@ Order of declared properties must follow these rules, ordered by priority:
 6. `init` after all properties
 
 The static/non-static group and different visibility groups must be separated by a newline.
+If you want, you can extract properties into separate extensions grouped by visibility but `public` properties must be a part of class declaration.
 
 **Use:**
 ```swift
@@ -995,52 +1030,65 @@ if condition1, condition2, condition3 {
 * Leave an empty line after the `guard` statement(s) block.
 
 **Use:**
+<sub>Note: in these examples we use `----------` to mark and end of a single example</sub>
 ```swift
 guard condition else { return }
-
+----------
 guard condition else { return Error() }
-
+----------
 guard condition else {
     return VeryLongErrorClassNameThatWouldNotFitInSingleLine()
 }
-
+----------
 guard 
     let variableWithVeryLongName = functionWithVeryLongName(param1: param1, param2: param2)
 else {
     return
 }
-
+----------
 guard condition else {
     processFirstThing()
     processThatOtherThing()
     return
 }
-
+----------
 guard
     condition1,
     condition2
 else {
     return
 }
+----------
+// Multiple guards should be grouped in a block without newlines
+guard condition1 else { return }
+guard condition2 else { return Error() }
+guard condition3 else { return Error2() }
 ```
 
 **Avoid:**
+<sub>Note: in these examples we use `----------` to mark and end of a single example</sub>
 ```swift
 guard condition else {
     return
 }
-
+----------
 guard condition
 else { return }
-
+----------
 guard condition else {
     return Error()
 }
-
+----------
 guard condition else { return VeryLongErrorClassNameThatWouldNotFitInSingleLine() }
-
+----------
 guard condition1, condition2
 else { return }
+----------
+guard condition1 else { return }
+
+guard condition2 else { return Error() }
+
+guard condition3 else { return Error2() }
 ```
 
 
