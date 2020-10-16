@@ -125,9 +125,9 @@ func pow<Number>(_ a: Number, _ b: Number)
 
 ## Code Organization
 ### Extensions
-You should write a separate extension for each protocol you are conforming to. Extension should be:
-* In a new file if that allows you not to modify class property visibility (this does not apply to properties that are extension of `UIView`)
-* Otherwise, in the same file as class declaration. In that case, each extension **must** have a `// MARK:` comment with name for easy navigation
+You should write a separate extension for each protocol you are conforming to. The extension should be:
+* In a new file if that allows you not to modify class property visibility (this does not apply to properties that are an extension of `UIView`)
+* Otherwise, in the same file as the class declaration. In that case, each extension **must** have a `// MARK:` comment with a name for easy navigation
 
 It is a good practice to write code for building the view in a separate extension in a new file because building the UI should be separated from the class functionality.
 You use the `ConstructViewsProtocol` protocol or you can define your own. The point is that the UI building process in code should be formalized.
@@ -137,7 +137,7 @@ You use the `ConstructViewsProtocol` protocol or you can define your own. The po
   Formalizes view construction into separate lifecycle steps:
   - creating views - creates and initializes all child views
   - styling views - sets style properties for each child view
-  - define layout for views - sets layout constraints for each view
+  - define the layout for views - sets layout constraints for each view
 */
 protocol ConstructViewsProtocol {
 
@@ -180,7 +180,7 @@ extension ContentViewController: ConstructViewsProtocol {
         view.addSubview(someView)
     }
 
-    func styleViews() {
+    func styleViews() {
         ...
     }
 
@@ -211,7 +211,7 @@ extension ContentViewController: ConstructViewsProtocol {
         view.addSubview(someView)
     }
 
-    func styleViews() {
+    func styleViews() {
         ...
     }
 
@@ -250,7 +250,7 @@ class ContentViewController: UIViewController, ConstructViewsProtocol, UIScrollV
         view.addSubview(someView)
     }
 
-    func styleViews() {
+    func styleViews() {
         ...
     }
 
@@ -383,7 +383,7 @@ import CoreUI
 * Add a single newline character after class/struct name definition and before the end of a class body
 * Add a new line after `guard` statement
 * Colons have no space before and have only one space after. Exceptions are:
-    * ternary operator `? :`
+    * ternary operator `?:`
     * empty dictionary `[:]`
     * selectors `addTarget(_:action:)`
 
@@ -562,7 +562,7 @@ Use `()` to denote void **input** and `Void` to denote void **output** for funct
 
 ### Function calls
 Similar to function declarations, short function calls should be in one line, and longer broken into multiple lines. The only difference is that the closing bracket for function calls doesn't go into a new line.
-Exception are multiple trailing closures which are described in [Closure Expressions](#closure-expressions).
+The exception is multiple trailing closures which are described in [Closure Expressions](#closure-expressions).
 
 **Use:**
 ```swift
@@ -745,7 +745,7 @@ if let model = model {
 For unwrapping, use the name of the optional instead of adding something to the name like `strongSelf`, `unwrapedAddress`, `addressWithValue` etc.
 
 ### Type Inference
-Avoid explicitly declaring the type if the compiler can infer the type. Exceptions can be initializing with static values, enum cases, or if we want a type other than the inferred one.
+Avoid explicitly declaring the type if the compiler can infer the type. Exceptions can be initialized with static values, enum cases, or if we want a type other than the inferred one.
 
 **Use:**
 ```swift
@@ -1023,7 +1023,7 @@ if condition1, condition2, condition3 {
 ```
 
 ### Guard Statement
-* Write the `guard` statement in one line if it has only one condition and `else` has only `return` statement. If it exceeds 120 characters, depending on the lenght of the condition or the body, both condition and the `else` body go in a new line, or just the `else` body goes in a new line.
+* Write the `guard` statement in one line if it has only one condition and `else` has only the `return` statement. If it exceeds 120 characters, depending on the length of the condition or the body, both condition and the `else` body go in a new line, or just the `else` body goes in a new line.
 * If `else` body has multiple statements, the body goes in a new line.
 * If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and finally `else` body beginning in a new line.
 * If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
@@ -1032,9 +1032,9 @@ if condition1, condition2, condition3 {
 **Use:**
 <sub>Note: in these examples we use `----------` to mark and end of a single example</sub>
 ```swift
-guard condition else { return }
+guard condition else { return }
 ----------
-guard condition else { return Error() }
+guard condition else { return Error() }
 ----------
 guard condition else {
     return VeryLongErrorClassNameThatWouldNotFitInSingleLine()
@@ -1060,9 +1060,9 @@ else {
 }
 ----------
 // Multiple guards should be grouped in a block without newlines
-guard condition1 else { return }
-guard condition2 else { return Error() }
-guard condition3 else { return Error2() }
+guard condition1 else { return }
+guard condition2 else { return Error() }
+guard condition3 else { return Error2() }
 ```
 
 **Avoid:**
@@ -1084,11 +1084,11 @@ guard condition else { return VeryLongErrorClassNameThatWouldNotFitInSingleLine(
 guard condition1, condition2
 else { return }
 ----------
-guard condition1 else { return }
+guard condition1 else { return }
 
-guard condition2 else { return Error() }
+guard condition2 else { return Error() }
 
-guard condition3 else { return Error2() }
+guard condition3 else { return Error2() }
 ```
 
 
