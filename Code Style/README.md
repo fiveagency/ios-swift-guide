@@ -872,7 +872,6 @@ Extend object lifetime using the `[weak self]` and `guard let self = self else {
 
 In most cases, the only modifier you'll need to use is `private`, which is preferred over `fileprivate`.
 Write other modifiers if the code organization requires it explicitly. E.g. using `public` when you want something to be visible outside that module in workspaces with multiple modules (projects).
-Try to make private everything that does not need to be exposed unless using extensions. In those cases do your best to make that property immutable to the outside.
 
 ## Property Declaration Order
 Order of declared properties must follow these rules, ordered by priority:
