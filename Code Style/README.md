@@ -265,7 +265,7 @@ class ContentViewController: UIViewController, ConstructViewsProtocol, UIScrollV
 As mentioned in [Extensions](#extensions), when conforming to a protocol, methods should be implemented in an extension. Exceptions are protocols that provide default implementation or protocols without which the object makes no sense. 
 In those cases, multiple protocols can be listed after the object name.
 
-**Use:**:
+**Use:**
 ```swift
 struct Car: Equatable, Codable {
 
@@ -280,7 +280,7 @@ struct Car: Equatable, Codable {
 }
 ```
 
-**Avoid:**:
+**Avoid:**
 ```swift
 // Car.swift
 struct Car {
@@ -936,7 +936,7 @@ class MyClass {
 
 ## Control Flow
 
-Prefer `guard` over `if` when the condition blocks execution of the rest of the function and to avoid the pyramid of doom.
+Prefer `guard` over `if` to avoid the pyramid of doom and when the condition blocks execution of the rest of the function.
 
 **Use:**
 ```swift
@@ -1029,6 +1029,7 @@ if condition1, condition2, condition3 {
 * Leave an empty line after the `guard` statement(s) block.
 
 **Use:**
+
 <sub>Note: in these examples we use `----------` to mark and end of a single example</sub>
 ```swift
 guard condition else { return }
@@ -1065,6 +1066,7 @@ guard condition3 else { return Error2() }
 ```
 
 **Avoid:**
+
 <sub>Note: in these examples we use `----------` to mark and end of a single example</sub>
 ```swift
 guard condition else {
