@@ -4,7 +4,7 @@
 
 * [Overview](#overview)
 * [Code Style](#code-style)
-* [Integration into project](#integration-into-project)
+* [Integration into a project](#integration-into-a-project)
 * [Example](#example)
 
 ## Overview
@@ -12,10 +12,10 @@
 SwiftLint is a tool to enforce Swift style and conventions.
 
 Main benefits of linting a Swift code:
-* It helps to onboard a new developer and follow FIVE iOS code style guide.
+* It helps to onboard a new developer and follows FIVE iOS code style guide.
 * SwiftLint will warn a developer if the code style guide is not followed, and improve code consistency across FIVE iOS codebases.
 * Can help reduce the number of common mistakes, e.g. strong `self` in closures 💪
-* Reduce number of stylistic comments on pull requests, as build checks will surface such mistakes even before anybody looks at a pull request. 
+* Reduce the number of stylistic comments on pull requests, as build checks will surface such mistakes even before anybody looks at a pull request. 
  
 You can find more information [here](https://github.com/realm/SwiftLint).
 
@@ -25,26 +25,26 @@ Our default implementation of the SwiftLint .yml file can be found [here](.swift
 
 SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.com/github/swift-style-guide). However, because this style guide is not active anymore we are following a Swift style guide from Ray Wenderlich. This style guide can be found [here](https://github.com/raywenderlich/swift-style-guide) and it is regularly maintained.
 
-SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.com/github/swift-style-guide). However, because Github style guide was not maintained we chose to follow a different one as our baseline standard - [Ray Wenderlich Style Guide](https://github.com/raywenderlich/swift-style-guide). Choosing a different style guide is supported. 
+SwiftLint was originally based on [GitHub’s Swift Style Guide](https://github.com/github/swift-style-guide). However, because the Github style guide was not maintained we chose to follow a different one as our baseline standard - [Ray Wenderlich Style Guide](https://github.com/raywenderlich/swift-style-guide). Choosing a different style guide is supported. 
 SwiftLint is highly configurable and extensible linter with:
 * 75 out-of-the-box [rules](https://realm.github.io/SwiftLint/rule-directory.html)
 * YAML config file for [selecting rules](https://github.com/realm/SwiftLint#configuration)
 * Custom [regex-based rules](https://github.com/realm/SwiftLint#defining-custom-rules)
 
 
-## Integration into project
+## Integration into a project
 
 **Basic setup**
 
 To enable SwiftLint in your project you have to:
 
 1. Install the [latest SwiftLint pod](https://github.com/realm/SwiftLint/tags).
-1. Include .switlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can use our [default SwiftLint implementation](.swiftlint.yml) and just copy it. Make sure to stage it for commit if you have a source control system.
+1. Include .swiftlint.yml file to root project directory. This file will be hidden but it is used for SwiftLint configuration. You can create this file from XCode as an empty file or you can use our [default SwiftLint implementation](.swiftlint.yml) and just copy it. Make sure to stage it for commit if you have a source control system.
 1. You need to add a SwiftLint run phase:
-    1. In XCode, click on project
-    1. Select desired target
+    1. In XCode, click on the project
+    1. Select the desired target
     1. Select Build phases
-    1. Click on Add button and select New Run Script Phase
+    1. Click on the Add button and select New Run Script Phase
     1. In definition, add this: ${PODS_ROOT}/SwiftLint/swiftlint
     1. Run pod install and rebuild the project
     
@@ -181,10 +181,10 @@ custom_rules:
 
 Below are examples of SwiftLint warnings when we broke some rules.
 
-Build will fail with SwiftLint message if we set severity as error :
+The build will fail with SwiftLint message if we set severity as error :
 
 ![Example](Images/Image_2.png)
 
-Build will succeed with SwiftLint message if we set severity as a warning:
+The build will succeed with SwiftLint message if we set severity as a warning:
 
 ![Example](Images/Image_3.png)
