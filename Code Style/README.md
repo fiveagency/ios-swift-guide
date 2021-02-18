@@ -884,10 +884,19 @@ Order of declared properties must follow these rules, ordered by priority:
 
 The static/non-static group and different visibility groups must be separated by a newline.
 If you want, you can extract properties into separate extensions grouped by visibility but `public` properties must be a part of class declaration.
+<br/><br/>
+Nested classes and `typealiases` should be declared before properties, at the top of the class. Order of the declarations should be:
+1. `public` before `internal` and `internal` before `private`
 
 **Use:**
 ```swift
 class MyClass {
+
+    enum class Section {
+        main
+    }
+
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, ViewModel>
 
     static let var1 = "Var1"
     static var var2 = "Var2"
