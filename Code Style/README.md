@@ -874,9 +874,14 @@ In most cases, the only modifier you'll need to use is `private`, which is prefe
 Write other modifiers if the code organization requires it explicitly. E.g. using `public` when you want something to be visible outside that module in workspaces with multiple modules (projects).
 
 ## Property Declaration Order
+Nested classes and `typealiases` should be declared before properties, at the top of the class. Order of the declarations should be from least restrictive to most restrictive:
+1. `public` -> `internal` -> `private`
+
+<br />
+
 Order of declared properties must follow these rules, ordered by priority:
 1. `static` before `non-static`
-2. `public` before `internal` and `internal` before `private`
+2. `open` -> `public` -> `internal` -> `file-private` -> `private`
 3. `constants` before `variables` (`let` before `var`)
 4. properties initialized in the same line as declared before those initialized at some other time
 5. `computed properties` after other properties
@@ -884,10 +889,17 @@ Order of declared properties must follow these rules, ordered by priority:
 
 The static/non-static group and different visibility groups must be separated by a newline.
 If you want, you can extract properties into separate extensions grouped by visibility but `public` properties must be a part of class declaration.
+<br/><br/>
 
 **Use:**
 ```swift
 class MyClass {
+
+    enum class Section {
+        main
+    }
+
+    private typealias DataSource = UICollectionViewDiffableDataSource<Section, ViewModel>
 
     static let var1 = "Var1"
     static var var2 = "Var2"
