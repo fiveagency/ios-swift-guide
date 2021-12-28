@@ -152,8 +152,6 @@ view
 
 The [UIControl](https://developer.apple.com/documentation/uikit/uicontrol) is the base class for controls, which are visual elements that convey a specific action or intention in response to user interactions.
 
-<br />  
-
 ### UITextField extensions
 
 It is a common use case to observe a text change in the UITextField so we have added a `rxText` property which listens to a text change and emits a current text in the field. If you set a new text manually in the code via the `text` property, it **will not** emit a new text value. You have to call the function `notifyTextChanged` so that the change is propagated.
