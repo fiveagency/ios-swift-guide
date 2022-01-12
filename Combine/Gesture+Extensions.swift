@@ -76,6 +76,7 @@ class GestureSubscription<S: Subscriber>: Subscription where S.Input == GestureT
     @objc private func handler() {
         _ = subscriber?.receive(gestureType)
     }
+
 }
 
 struct GesturePublisher: Publisher {
