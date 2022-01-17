@@ -105,7 +105,6 @@ class BarItemGestureSubscription<S: Subscriber>: Subscription where S.Input == G
     private let gestureType: GestureType = .tap()
     private var subscriber: S?
     private var barItem: UIBarButtonItem
-    
 
     init(subscriber: S, barItem: UIBarButtonItem) {
         self.subscriber = subscriber

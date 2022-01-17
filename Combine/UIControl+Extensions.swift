@@ -3,7 +3,7 @@ import UIKit
 
 extension UITextField {
 
-    var rxText: AnyPublisher<String, Never> {
+    var textDidChange: AnyPublisher<String, Never> {
         NotificationCenter
             .default
             .publisher(for: UITextField.textDidChangeNotification, object: self)
@@ -12,7 +12,7 @@ extension UITextField {
             .eraseToAnyPublisher()
     }
 
-    var onEditingStart: AnyPublisher<Void, Never> {
+    var textDidBeginEditing: AnyPublisher<Void, Never> {
         NotificationCenter
             .default
             .publisher(for: UITextField.textDidBeginEditingNotification, object: self)
