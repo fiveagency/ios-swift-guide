@@ -154,21 +154,21 @@ The [UIControl](https://developer.apple.com/documentation/uikit/uicontrol) is th
 
 ### UITextField extensions
 
-It is a common use case to observe a text change in the UITextField so we have added a `rxText` property which listens to a text change and emits a current text in the field. If you set a new text manually in the code via the `text` property, it **will not** emit a new text value. You have to call the function `notifyTextChanged` so that the change is propagated.
+It is a common use case to observe a text change in the UITextField so we have added a `textDidChange` property which listens to a text change and emits a current text in the field. If you set a new text manually in the code via the `text` property, it **will not** emit a new text value. You have to call the function `notifyTextChanged` so that the change is propagated.
 
 See [UIControl+Extensions.swift](UIControl+Extensions.swift) file for more details.
 
 ```swift
 let usernameField = UITextField()
 usernameField
-    .rxText
+    .textDidChange
     .sink { username in
         // process username here
     }
     .store(in: &cancellables)
 
 usernameField
-    .onEditingStart
+    .textDidBeginEditing
     .sink {
         // e.g.: change UI elements while username is being typed. 
     }
