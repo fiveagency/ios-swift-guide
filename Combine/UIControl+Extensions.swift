@@ -16,7 +16,7 @@ extension UITextField {
         NotificationCenter
             .default
             .publisher(for: UITextField.textDidBeginEditingNotification, object: self)
-            .map { _ in () }
+            .map { _ in }
             .eraseToAnyPublisher()
     }
 
