@@ -1036,7 +1036,7 @@ if condition1, condition2, condition3 {
 ### Guard Statement
 * Write the `guard` statement in one line if it has only one condition and `else` has only the `return` statement. If it exceeds 120 characters, depending on the length of the condition or the body, both condition and the `else` body go in a new line, or just the `else` body goes in a new line.
 * If `else` body has multiple statements, the body goes in a new line.
-* If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line and finally `else` body beginning in a new line.
+* If the `guard` statement has multiple conditions, each condition must be in a new line, followed by `else` in a new line. If `else` body is a single line, it should go in the same line as the `else` keyword. Otherwise, `else` body should begin in a new line.
 * If the guard statement has only one condition, it can be in one line. Otherwise, each condition must be in a new line.
 * Leave an empty line after the `guard` statement(s) block.
 
@@ -1054,8 +1054,21 @@ guard condition else {
 ----------
 guard 
     let variableWithVeryLongName = functionWithVeryLongName(param1: param1, param2: param2)
-else {
-    return
+else { return }
+
+guard 
+    let variableWithVeryLongName = functionWithVeryLongName(param1: param1, param2: param2)
+else { return nil }
+
+guard 
+    let variableWithVeryLongName = functionWithVeryLongName(param1: param1, param2: param2)
+else { return .just() }
+
+guard 
+    let variableWithVeryLongName = functionWithVeryLongName(param1: param1, param2: param2)
+else { 
+    return string
+        .trimmingCharacters(in: .whitespaces)
 }
 ----------
 guard condition else {
@@ -1096,6 +1109,13 @@ guard condition else { return VeryLongErrorClassNameThatWouldNotFitInSingleLine(
 ----------
 guard condition1, condition2
 else { return }
+----------
+guard
+    condition1,
+    condition2
+else {
+    return
+}
 ----------
 guard condition1 else { return }
 
