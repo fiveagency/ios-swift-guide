@@ -1053,7 +1053,7 @@ if condition {
 ```
 
 ### Multiline Ternary Operator
-When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and third lines of the multiline ternary operator must be indented by one tab. 
+When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and the third line of the multiline ternary operator must be indented by one tab. 
 
 **Use:**
 ```swift
