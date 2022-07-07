@@ -1036,7 +1036,7 @@ if condition1, condition2, condition3 {
 ```
 
 ### Ternary Operator
-When assigning value under a specific condition, use the ternary operator instead of `if-else statement` whenever possible. Anything that outputs `true` or `false` can be considered a `condition`.
+When assigning a value under a specific condition, use the ternary operator instead of an `if-else statement` whenever possible. Anything that outputs `true` or `false` can be considered a `condition`.
 
 **Use:**
 ```swift
@@ -1053,7 +1053,7 @@ if condition {
 ```
 
 ### Multiline Ternary Operator
-When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and the third line of the multiline ternary operator must be indented by one tab. 
+When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and the third line of the multiline ternary operator must be indented by 4 spaces (one tab). 
 
 **Use:**
 ```swift
