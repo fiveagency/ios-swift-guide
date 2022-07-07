@@ -32,6 +32,8 @@ This is an official code style guide for FIVE iOS Swift projects. [API Design Gu
 * [Property Declaration Order](#property-declaration-order)
 * [Control Flow](#control-flow)
     * [If Else Statement](#if-else-statement)
+    * [Ternary Operator](#ternary-operator)
+    * [Multiline Ternary Operator](#multiline-ternary-operator)
     * [Guard Statement](#guard-statement)
 * [Semicolons](#semicolons)
 * [Parentheses](#parentheses)
@@ -1031,6 +1033,40 @@ if condition1, condition2, condition3 {
 } else {
     // do something else
 }
+```
+
+### Ternary Operator
+When assigning value under a specific condition, use the ternary operator instead of `if-else statement` whenever possible. Anything that outputs in `true` or `false` can be considered a `condition`.
+
+**Use:**
+```swift
+variable = condition ? valueToAssign1 : valueToAssign2
+```
+
+**Avoid:**
+```swift
+if condition {
+    variable = valueToAssign1
+} else {
+    variable = valueToAssign2
+}
+```
+
+### Multiline Ternary Operator
+When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and third lines of the multiline ternary operator must be indented by one tab. 
+
+**Use:**
+```swift
+variable = someLongLongLongLongCondition ? 
+    valueWithVeryLongName1 :
+    valueWithVeryLongName2
+```
+
+**Avoid:**
+```swift
+variable = someLongLongLongLongCondition ? 
+valueWithVeryLongName1 :
+valueWithVeryLongName2
 ```
 
 ### Guard Statement
