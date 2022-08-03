@@ -382,16 +382,20 @@ Swift does not support out-of-the-box namespacing as e.g. Java does, i.e. we can
 **Use:**
 ```swift
 enum Constants {
-    static let height: CGFloat { 10 }
-    static let buttonId: String { "button_identifier" }
+
+    static let height: CGFloat = 10
+    static let buttonId = "button_identifier"
+
 }
 ```
 
 **Avoid:**
 ```swift
 struct Constants {
-    static let height: CGFloat { 10 }
-    static let buttonId: String { "button_identifier" }
+
+    static let height: CGFloat = 10
+    static let buttonId = "button_identifier"
+
 }
 ```
 
