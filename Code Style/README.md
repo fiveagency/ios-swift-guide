@@ -1059,12 +1059,12 @@ If the value to assign is being calculated in a separate function which returns 
 ```swift
 variable = condition ? calculateValue1(...) : calculateValue2(...)
 
-func calculateValue1() -> String {
+func calculateValue1(...) -> String {
     ...
     return value1
 }
 
-func calculateValue2() -> String {
+func calculateValue2(...) -> String {
     ...
     return value2
 }
