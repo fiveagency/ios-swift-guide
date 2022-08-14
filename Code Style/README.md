@@ -33,6 +33,7 @@ This is an official code style guide for FIVE iOS Swift projects. [API Design Gu
 * [Control Flow](#control-flow)
     * [If Else Statement](#if-else-statement)
     * [Ternary Operator](#ternary-operator)
+    * [Nested Ternary Operator](#nested-ternary-operator)
     * [Multiline Ternary Operator](#multiline-ternary-operator)
     * [Guard Statement](#guard-statement)
 * [Semicolons](#semicolons)
@@ -1052,8 +1053,91 @@ if condition {
 }
 ```
 
+If the value to assign is being calculated in a separate function which returns a value, ternary should be used when calling those functions.
+
+**Use:**
+```swift
+variable = condition ? calculateValue1(...) : calculateValue2(...)
+
+func calculateValue1() -> String {
+    ...
+    return value1
+}
+
+func calculateValue2() -> String {
+    ...
+    return value2
+}
+```
+
+**Avoid:**
+```swift
+if condition {
+    variable = calculateValue1(...)
+} else {
+    variable = calculateValue2(...)
+}
+```
+
+As long as a ternary operator is used for the decision of which value to choose, it should replace an `if-else statement`. A practical example is a return of a function.
+
+**Use:**
+```swift
+func description(condition: Bool) -> String {
+    ...
+    return condition ? value1 : value2
+}
+```
+
+**Avoid:**
+```swift
+func description(condition: Bool) -> String {
+    ...
+    if condition {
+        return value1
+    } else {
+        return value2
+    }
+}
+```
+
+Ternary operator must not be misused for calling functions that return void.
+
+**Use:**
+```swift
+if condition {
+    doSomething()
+} else {
+    doSomethingElse()
+}
+
+func doSomething() {}
+
+func doSomethingElse() {}
+```
+
+**Avoid:**
+```swift
+condition ? doSomething() : doSomethingElse()
+```
+
+### Nested Ternary Operator
+If a value which is being assigned in the main ternary operator depends on another condition, extract it into a separate ternary expression.
+
+**Use:**
+```swift
+extractedValueToAssign = condition2 ? valueToAssign3 : valueToAssign4
+
+variable = condition ? extractedValueToAssign : valueToAssign2
+```
+
+**Avoid:**
+```swift
+variable = condition ? (condition2 ? valueToAssign3 : valueToAssign4) : valueToAssign2
+```
+
 ### Multiline Ternary Operator
-When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and the third line of the multiline ternary operator must be indented by 4 spaces (one tab). 
+When using a ternary operator that doesn't fit into 120 characters, use a multiline ternary operator. The second and the third line of the multiline ternary operator must be indented by 4 spaces. 
 
 **Use:**
 ```swift
