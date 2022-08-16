@@ -13,6 +13,7 @@ This is an official code style guide for FIVE iOS Swift projects. [API Design Gu
     * [Protocol Conformance](#protocol-conformance)
     * [Unused Code](#unused-code)
     * [Imports](#imports)
+    * [Namespacing](#namespacing)
 * [Spacing](#spacing)
 * [Comments](#comments)
 * [Classes and structs](#classes-and-structs)
@@ -372,6 +373,30 @@ import RxCocoa
 import RxSwift
 import Core
 import CoreUI
+```
+
+### Namespacing
+
+Swift does not support out-of-the-box namespacing as e.g. Java does, i.e. we can't create a standalone namespace smaller than a module. To achieve this, we need to use enums/structs, with former being preferred as enums can't be instantiated.
+
+**Use:**
+```swift
+enum Constants {
+
+    static let height: CGFloat = 10
+    static let buttonId = "button_identifier"
+
+}
+```
+
+**Avoid:**
+```swift
+struct Constants {
+
+    static let height: CGFloat = 10
+    static let buttonId = "button_identifier"
+
+}
 ```
 
 ## Spacing
