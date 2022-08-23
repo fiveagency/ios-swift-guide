@@ -1053,7 +1053,7 @@ if condition {
 }
 ```
 
-If the value to assign is being calculated in a separate function which returns a value, ternary should be used when calling those functions.
+If the value to assign is being calculated in a separate function which returns a value, the ternary operator should be used when calling those functions.
 
 **Use:**
 ```swift
@@ -1101,7 +1101,7 @@ func description(condition: Bool) -> String {
 }
 ```
 
-Ternary operator must not be misused for calling functions that return void.
+The ternary operator must not be misused for calling functions that return void.
 
 **Use:**
 ```swift
