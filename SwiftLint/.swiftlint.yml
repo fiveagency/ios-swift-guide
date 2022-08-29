@@ -5,6 +5,9 @@ identifier_name:
 line_length: 
   warning: 120
   ignores_comments: true
+file_length:
+  warning: 600
+  error: 1200
 type_name:
   max_length: 50
 function_parameter_count:
