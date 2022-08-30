@@ -178,7 +178,7 @@ custom_rules:
       severity: error
     newline_after_definition_start:
       name: "There should be an empty line after defintion opening braces"
-      regex: '(^[ a-zA-Z]*(?:protocol|extension|class|struct|enum) (?!(?:var|let))[ a-zA-Z:,<>\n]*\{\n *\S+)'
+      regex: '(^[ a-zA-Z]*(?:protocol|extension|class|struct|enum)[ a-zA-Z:,<>\n]*\{\n *\S+)'
       severity: warning
     newline_before_definition_end:
       name: "There should be an empty line before defintion closing braces"
