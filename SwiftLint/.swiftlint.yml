@@ -11,3 +11,13 @@ function_parameter_count:
   warning: 9
   error: 12
 large_tuple: 4
+
+custom_rules:
+  newline_after_definition_start:
+    name: "There should be an empty line after defintion opening braces"
+    regex: '(^[ a-zA-Z]*(?:protocol|extension|class|struct|enum) (?!(?:var|let))[ a-zA-Z:,<>\n]*\{\n *\S+)'
+    severity: warning
+  newline_before_definition_end:
+    name: "There should be an empty line before defintion closing braces"
+    regex: '^[^\n]+\n\}\n'
+    severity: warning
