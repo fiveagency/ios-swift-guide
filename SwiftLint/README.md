@@ -159,8 +159,8 @@ We defined custom rules using regex for:
 * force_try - because there are some force tries which are allowed in your project
 * force_cast - because there are some force casts which are allowed in your project
 * todo - because only todo with ticket number should be allowed
-* newline_after_definition_start - because there should be an empty line after the definition opening braces
-* newline_before_definition_end - because there should be an empty line before the definition closing braces
+* [newline_after_definition_start](CustomRules/newline_after_definition_start%20and%20newline_before_definition_end/) - because there should be an empty line after the definition opening braces
+* [newline_before_definition_end](CustomRules/newline_after_definition_start%20and%20newline_before_definition_end/) - because there should be an empty line before the definition closing braces
 
 ```yaml
 custom_rules:
