@@ -5,12 +5,26 @@ identifier_name:
 line_length: 
   warning: 120
   ignores_comments: true
-file_length:
-  warning: 600
-  error: 1200
 type_name:
   max_length: 50
 function_parameter_count:
   warning: 9
   error: 12
 large_tuple: 4
+
+disabled_rules:
+  - file_length
+
+custom_rules:
+  file_length_view_controllers:
+    name: "File Length Violation: ViewControllers should contain 600 lines or less"
+    regex: '([^\n]*?\n){600,}'
+    severity: warning
+    included: ".*ViewController.swift"
+  file_length_custom:
+    name: "File Length Violation: Files should contain 400 lines or less"
+    regex: '([^\n]*?\n){400,}'
+    severity: warning
+    included: ".*.swift"
+    excluded: ".*ViewController.swift" 
+
