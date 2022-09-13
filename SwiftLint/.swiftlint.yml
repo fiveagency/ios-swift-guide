@@ -26,5 +26,12 @@ custom_rules:
     regex: '([^\n]*?\n){400,}'
     severity: warning
     included: ".*.swift"
-    excluded: ".*ViewController.swift" 
-
+    excluded: ".*ViewController.swift"
+  newline_after_definition_start:
+    name: "There should be an empty line after the definition opening braces"
+    regex: '(^[ a-zA-Z]*(?:protocol|extension|class|struct|enum)[ a-zA-Z:,<>\n]*\{\n *\S+)'
+    severity: warning
+  newline_before_definition_end:
+    name: "There should be an empty line before the definition closing braces"
+    regex: '^[^\n]+\n\}\n'
+    severity: warning

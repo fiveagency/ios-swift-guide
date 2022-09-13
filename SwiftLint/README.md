@@ -159,6 +159,8 @@ We defined custom rules using regex for:
 * force_try - because there are some force tries which are allowed in your project
 * force_cast - because there are some force casts which are allowed in your project
 * todo - because only todo with ticket number should be allowed
+* [newline_after_definition_start](CustomRules/newline_after_definition_start%20and%20newline_before_definition_end/) - because there should be an empty line after the definition opening braces
+* [newline_before_definition_end](CustomRules/newline_after_definition_start%20and%20newline_before_definition_end/) - because there should be an empty line before the definition closing braces
 
 ```yaml
 custom_rules:
@@ -174,6 +176,14 @@ custom_rules:
       name: "Todo Violation: TODOs without ticket number should be resolved."
       regex: 'TODO:\s(?!.*(TICKET_PREFIX-\d)).*?'
       severity: error
+    newline_after_definition_start:
+      name: "There should be an empty line after the definition opening braces"
+      regex: '(^[ a-zA-Z]*(?:protocol|extension|class|struct|enum)[ a-zA-Z:,<>\n]*\{\n *\S+)'
+      severity: warning
+    newline_before_definition_end:
+      name: "There should be an empty line before the definition closing braces"
+      regex: '^[^\n]+\n\}\n'
+      severity: warning
 ```
 
 
