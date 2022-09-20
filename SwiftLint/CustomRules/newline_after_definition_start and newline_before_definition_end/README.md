@@ -8,6 +8,26 @@ These rules enforce our code style for having a newline after opening and before
 
 NOTE: The newline_before_definition_end will not catch nested type definitions, only the most outer closing braces. I was not able to construct a regex that will stop at the proper closing brace and also check if there is not an empty line before it.
 
+NOTE: If you are using global functions, make sure to disable the custom `newline_before_definition_end` rule for the range of the global functions. Example:
+
+```swift
+// swiftlint:disable newline_before_definition_end
+public func funcOne() {
+    ...
+}
+
+public func funcTwo() {
+    ...
+}
+
+// swiftlint:enable newline_before_definition_end
+public extension View {
+
+    ...
+
+}
+```
+
 <br/>
 
 ### Won't trigger warning:
