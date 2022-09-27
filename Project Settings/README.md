@@ -17,3 +17,5 @@ Those flags are:
 
 Both flags receive a value in milliseconds, which represents a build time limit. Suggested limit is `100ms` for both flags. The warning is displayed if that limit is exceeded.
 If the warning is displayed, a function or an expression should be decoupled into smaller logical components, resulting in a less complex and more readable code.
+
+![Example](Images/Image_1.png)
