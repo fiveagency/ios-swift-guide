@@ -1,0 +1,12 @@
+custom_rules:
+  file_length_view_controllers:
+    name: "File Length Violation: ViewControllers should contain 600 lines or less"
+    regex: '([^\n]*?\n){600,}'
+    severity: warning
+    included: ".*ViewController.swift"
+  file_length_custom:
+    name: "File Length Violation: Files should contain 400 lines or less"
+    regex: '([^\n]*?\n){400,}'
+    severity: warning
+    included: ".*.swift"
+    excluded: ".*ViewController.swift"

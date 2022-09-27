@@ -161,6 +161,8 @@ We defined custom rules using regex for:
 * todo - because only todo with ticket number should be allowed
 * [newline_after_definition_start](CustomRules/newline_after_definition_start%20and%20newline_before_definition_end/) - because there should be an empty line after the definition opening braces
 * [newline_before_definition_end](CustomRules/newline_after_definition_start%20and%20newline_before_definition_end/) - because there should be an empty line before the definition closing braces
+* [file_length_view_controllers](CustomRules/file_length_view_controllers%20and%20file_length_custom/) - to set max file length for *ViewController.swift files
+* [file_length_custom](CustomRules/file_length_view_controllers%20and%20file_length_custom/) - to set max file length for *.swift files excluding *ViewController.swift files.
 
 ```yaml
 custom_rules:
@@ -184,6 +186,17 @@ custom_rules:
       name: "There should be an empty line before the definition closing braces"
       regex: '^[^\n]+\n\}\n'
       severity: warning
+    file_length_view_controllers:
+      name: "File Length Violation: ViewControllers should contain 600 lines or less"
+      regex: '([^\n]*?\n){600,}'
+      severity: warning
+      included: ".*ViewController.swift"
+    file_length_custom:
+      name: "File Length Violation: Files should contain 400 lines or less"
+      regex: '([^\n]*?\n){400,}'
+      severity: warning
+      included: ".*.swift"
+      excluded: ".*ViewController.swift"
 ```
 
 
