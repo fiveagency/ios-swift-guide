@@ -1,6 +1,6 @@
 # FIVE iOS Swift Code Style
 
-This is an official code style guide for FIVE iOS Swift projects. [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) was used as the base, additional rules were added where necessary and existing ones were modified where needed.
+This is an official code style guide for FIVE iOS SwiftUI projects. [API Design Guidelines](https://swift.org/documentation/api-design-guidelines/) was used as the base, additional rules were added where necessary and existing ones were modified where needed.
 
 ## Table of Contents
 * [Naming](#naming)
@@ -73,7 +73,7 @@ func imageDownloaderDidStart() -> Bool
 ```
 
 ### Class prefixes
-Do not add a prefix to a class. The only exception is if you are extending an existing class from an Apple library, most commonly from UIKit. Nevertheless, you should think and find a good name without using the prefix.
+Do not add a prefix to a class. The only exception is if you are extending an existing class from an Apple library. Nevertheless, you should think and find a good name without using the prefix.
 
 **Use:**
 ```swift
@@ -100,14 +100,14 @@ The Swift compiler can conclude what is the desired (inferred) type so use that 
 
 **Use:**
 ```swift
-let view = UIView(frame: .zero)
-view.backgroundColor = .red
+let viewProperties = ViewProperties()
+viewProperties.backgroundColor = .red
 ```
 
 **Avoid:**
 ```swift
-let view = UIView(frame: CGRect.zero)
-view.backgroundColor = UIColor.red
+let viewProperties = ViewProperties()
+viewProperties.backgroundColor = UIColor.red
 ```
 
 ### Generics
@@ -130,66 +130,28 @@ func pow<Number>(_ a: Number, _ b: Number)
 ## Code Organization
 ### Extensions
 You should write a separate extension for each protocol you are conforming to. The extension should be:
-* In a new file if that allows you not to modify class property visibility (this does not apply to properties that are an extension of `UIView`)
+* In a new file if that allows you not to modify class property visibility (this does not apply to properties that are an extension of `View`)
 * Otherwise, in the same file as the class declaration. In that case, each extension **must** have a `// MARK:` comment with a name for easy navigation
-
-It is a good practice to write code for building the view in a separate extension in a new file because building the UI should be separated from the class functionality.
-You use the `ConstructViewsProtocol` protocol or you can define your own. The point is that the UI building process in code should be formalized.
-
-```swift
-/**
-  Formalizes view construction into separate lifecycle steps:
-  - creating views - creates and initializes all child views
-  - styling views - sets style properties for each child view
-  - define the layout for views - sets layout constraints for each view
-*/
-protocol ConstructViewsProtocol {
-
-    func createViews()
-
-    func styleViews()
-
-    func defineLayoutForViews()
-
-}
-```
 
 **Use:**
 ```swift
-// ContentViewController.swift
-class ContentViewController: UIViewController {
+class LocationService: LocationServiceProtocol {
 
-    var someView: UIView!
+    // some logic
 
-    private let presenter: ContentPresenter
-    ...
+    // implementation of `LocationServiceProtocol`
 
 }
 
-extension ContentViewController: UIScrollViewDelegate {
+// MARK: - Location Manager Delegate
+extension LocationService: CLLocationManagerDelegate {
 
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        ...
-        presenter.doSomething()
-        ...
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        // accessing private properties of LocationService
     }
 
-}
-
-// ContentViewController+Design.swift
-extension ContentViewController: ConstructViewsProtocol {
-
-    func createViews() {
-        someView = UIView()
-        view.addSubview(someView)
-    }
-
-    func styleViews() {
-        ...
-    }
-
-    func defineLayoutForViews() {
-        ...
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // accessing private properties of LocationService
     }
 
 }
@@ -197,69 +159,18 @@ extension ContentViewController: ConstructViewsProtocol {
 
 **Avoid:**
 ```swift
-// ContentViewController.swift
-class ContentViewController: UIViewController {
+class LocationService: LocationServiceProtocol, CLLocationManagerDelegate {
 
-    
-    let presenter: ContentPresenter // replaced `private` with `internal`
+    // some logic
 
-    private var someView: UIView! // replaced `internal` with `private`
-    ...
+    // implementation of `LocationServiceProtocol`
 
-}
-
-extension ContentViewController: ConstructViewsProtocol {
-
-    func createViews() {
-        someView = UIView()
-        view.addSubview(someView)
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        //
     }
 
-    func styleViews() {
-        ...
-    }
-
-    func defineLayoutForViews() {
-        ...
-    }
-
-}
-
-// ContentViewController+Scroll.swift
-extension ContentViewController: UIScrollViewDelegate {
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        ...
-        presenter.doSomething()
-        ...
-    }
-   
-}
-
-// OR
-class ContentViewController: UIViewController, ConstructViewsProtocol, UIScrollViewDelegate {
-
-    private let presenter: ContentPresenter
-    private var someView: UIView!
-    ...
-
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        ...
-        presenter.doSomething()
-        ...
-    }
-
-    func createViews() {
-        someView = UIView()
-        view.addSubview(someView)
-    }
-
-    func styleViews() {
-        ...
-    }
-
-    func defineLayoutForViews() {
-        ...
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //
     }
 
 }
@@ -320,11 +231,6 @@ All unused or commented code should be removed from the codebase and that includ
 
 **Avoid:**
 ```swift
-override func didReceiveMemoryWarning() {
-  super.didReceiveMemoryWarning()
-  // Dispose of any resources that can be recreated.
-}
-
 func numberOfItems(in array: [Int]) -> Int {
     // TODO: implement this
     return 0
@@ -338,44 +244,45 @@ Import only modules you're using and remove imports if you've removed their usag
 
 **Use:**
 ```swift
-import UIKit
+import SwiftUI
 import CoreUI
 
-class MyViewController: UIViewController {
+struct MyView: View {
 
-    let button: RoundedButton // from CoreUI
-    let textView: UITextView
+    var body: some View {
+        RounedButton("hello") // from CoreUI
+    }
 
 }
 ```
 
 **Avoid:**
 ```swift
-import UIKit
+import SwiftUI
 import CoreUI
 
-class MyViewController: UIViewController {
+struct MyView: View {
 
-    let textView: UITextView
+    var body: some View {
+        Button("hello")
+    }
 
 }
 ```
 
 Use the following order when importing:
 * Apple frameworks
-* Other frameworks (Pods)
+* Other frameworks (Pods/Swift packages)
 * Project modules
 
 and order them alphabetically within every group:
 
 **Use:**
 ```swift
-import SceneKit
-import UIKit
-import RxCocoa
-import RxSwift
+import Combine
+import SwiftUI
+import KeychainWrapper
 import Core
-import CoreUI
 ```
 
 ### Namespacing
@@ -442,9 +349,13 @@ func·sum(numbers:·[Int?])·{¬
 ····return·sum¬
 }
 
-class MyViewController: UIViewController {
+struct MyView: View {
 
-    let userForId: [Int: User]
+    let text = "Hello"
+
+    var body: some View {
+        Text(text)
+    }
 
 }
 ```
@@ -628,17 +539,16 @@ The exception is multiple trailing closures which are described in [Closure Expr
 
 **Use:**
 ```swift
-UIView.animate(withDuration: 1.0) {
-  self.myView.alpha = 0
+Button(action: signIn) {
+    Text("Sign In")
 }
 
-UIView.animate(
-    withDuration: 1.0,
-    animations: {
-        self.myView.alpha = 0
+Button(
+    action: {
+       doSomething() 
     },
-    completion: { finished in
-        self.myView.removeFromSuperview()
+    label: {
+        Label("Tap me")
     })
 
 let names = users
@@ -653,29 +563,23 @@ let ages = users
     }
 
 // Multiple trailing closures
-UIView.animate(
-    withDuration: 1.0,
-    delay: 0.0,
-    options: .curveEaseIn
-) {
-    // animate something
-} completion: { success in
-    if success {
-        // do something
-    }
+Button {
+    doSomething()
+} label: {
+    Label("Tap me")
 }
 ```
 
 **Avoid:**
 ```swift
-UIView.animate(withDuration: 1.0, animations: { self.myView.alpha = 0 })
+Button(action: signIn) { Text("Sign In") }
 
-UIView.animate(
-    withDuration: 1.0,
-    animations: {
-        self.myView.alpha = 0
-    }) { finished in
-        self.myView.removeFromSuperview()
+Button(
+    role: .cancel,
+    action: { 
+        doSomething() 
+    }) {
+        Label("Tap me")
     }
 
 let names = users
@@ -689,16 +593,10 @@ let names = users
     }
 
 // Multiple trailing closures
-UIView.animate(
-    withDuration: 1.0,
-    delay: 0.0,
-    options: .curveEaseIn) {
-    // animate something
-} 
-completion: { success in
-    if success {
-        // do something
-    }
+Button(role: .cancel) {
+    doSomething()
+} label {
+    Label("Tap me")
 }
 ```
 
@@ -841,7 +739,8 @@ let value = max(x, y, z)  // another free function that feels natural
 
 ## Memory Management
 
-The code should not create reference cycles. Analyze your object graph and prevent strong cycles with `weak` and `unowned` references. Alternatively, use value types (`struct`, `enum`) to prevent cycles altogether.
+The code should not create reference cycles. Analyze your object graph and prevent strong cycles with `weak` and `unowned` references. Alternatively, use value types (`struct`, `enum`) to prevent cycles altogether. Note that SwiftUI views are `struct` which means their 
+trailing closures **don't** require `weak self`.
 
 ### Extending object lifetime
 
@@ -850,7 +749,7 @@ Extend object lifetime using the `[weak self]` and `guard let self = self else {
 **Use:**
 ```swift
 ...
-    .subscribe(onNext: { [weak self] viewModel in
+    .sink { [weak self] viewModel in
         guard let self = self else { return }
 
         let hasErrors = self.modelHasErrors(viewModel)
@@ -868,7 +767,7 @@ Extend object lifetime using the `[weak self]` and `guard let self = self else {
 ```swift
 // might crash if self is released before `onNext` is sent
 ...
-    .subscribe(onNext: { [unowned self] viewModel in
+    .sink { [unowned self] viewModel in
         let hasErrors = self.modelHasErrors(viewModel)
         if hasErrors {
             self.showAlert(for: viewModel)
@@ -884,7 +783,7 @@ Extend object lifetime using the `[weak self]` and `guard let self = self else {
 ```swift
 // `self` could be released between `modelHasErrors` and `someView.set`
 ...
-    .subscribe(onNext: { [weak self] viewModel in
+    .sink { [weak self] viewModel in
         let hasErrors = self?.modelHasErrors(viewModel)
         if hasErrors {
             self?.showAlert(for: viewModel)
@@ -927,7 +826,7 @@ class MyClass {
         main
     }
 
-    private typealias DataSource = UICollectionViewDiffableDataSource<Section, ViewModel>
+    private typealias EmptyCallback = () -> Void
 
     static let var1 = "Var1"
     static var var2 = "Var2"
